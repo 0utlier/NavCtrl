@@ -37,12 +37,20 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    
-    if ([self.title isEqualToString:@"Apple mobile devices"]) {
-        self.products = @[@"iPad", @"iPod Touch",@"iPhone"];
-    } else {
-        self.products = @[@"Galaxy S4", @"Galaxy Note", @"Galaxy Tab"];
-    }
+    // MOVED to parentView
+//    if ([self.title isEqualToString:@"Apple mobile devices"]) {
+////        self.products = @[@"iPad", @"iPod Touch",@"iPhone"];
+////		self.productLogo = @"AppleLogo.jpg";
+//	} else if ([self.title isEqualToString:@"Moto mobile devices"]) {
+////		self.products = @[@"slider",@"motog",@"360"];
+////		self.productLogo = @"MotoLogo.jpg";
+//	} else if ([self.title isEqualToString:@"Microsoft mobile devices"]) {
+////		self.products = @[@"windows",@"phone",@"tablet"];
+////		self.productLogo = @"MicrosoftLogo.jpg";
+//	} else {
+////        self.products = @[@"Galaxy S4", @"Galaxy Note", @"Galaxy Tab"];
+////		self.productLogo = @"SamsungLogo.jpg";
+//    }
     [self.tableView reloadData];
 }
 
@@ -77,17 +85,39 @@
     }
     // Configure the cell...
     cell.textLabel.text = [self.products objectAtIndex:[indexPath row]];
+	[[cell imageView] setImage:[UIImage imageNamed:self.productLogo]];
+
     return cell;
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+	NSUInteger fromRow = [fromIndexPath row];
+	NSUInteger toRow = [toIndexPath row];
+	id rep = [self.products objectAtIndex:fromRow];
+	[self.products removeObjectAtIndex:fromRow];
+	[self.products insertObject:rep atIndex:toRow];
+// if i need to have multiple images for each product
+//	id repL = [self.productLogo objectAtIndex:fromRow];
+//	[self.productLogo removeObjectAtIndex:fromRow];
+//	[self.productLogo insertObject:repL atIndex:toRow];
+	
+}
+
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSUInteger row = [indexPath row];
+	[self.products removeObjectAtIndex:row];
+	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	[tableView reloadData];
+}
+
 
 /*
 // Override to support editing the table view.
@@ -103,23 +133,23 @@
 }
 */
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
 
-/*
+// Override to support rearranging the table view.
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+//{
+//}
+
+
+
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
 
-/*
+
+
 #pragma mark - Table view delegate
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
@@ -127,7 +157,8 @@
 {
     // Navigation logic may go here, for example:
     // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+    WebViewController *detailViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+	detailViewController.url =@"https://www.google.com/";
 
     // Pass the selected object to the new view controller.
     
@@ -135,6 +166,6 @@
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
  
- */
+
 
 @end

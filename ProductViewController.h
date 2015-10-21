@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CompanyViewController.h"
+//import webView to point to
+#import "WebViewController.h"
 
 @interface ProductViewController : UITableViewController
-@property (nonatomic, retain) NSArray *products;
+@property (nonatomic, retain) NSMutableArray *products;
+@property (nonatomic, retain) NSString *productLogo;
+@property (nonatomic, retain) NSURL *url;
+
+
 @end

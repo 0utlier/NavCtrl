@@ -9,6 +9,7 @@
 #import "WebViewController.h"
 
 @interface WebViewController ()
+//@property (retain, nonatomic) IBOutlet UIWebView *myWebView;
 
 @end
 
@@ -17,6 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+	//convert nsstring to nsurl
+	NSURL *myurl = [[NSURL alloc] initWithString:self.url];
+	// then load the url
+	NSURLRequest *req = [[NSURLRequest alloc] initWithURL:myurl];
+	[self.myWebView loadRequest:req];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,4 +40,8 @@
 }
 */
 
+- (void)dealloc {
+	[_myWebView release];
+	[super dealloc];
+}
 @end
