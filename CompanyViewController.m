@@ -34,20 +34,18 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
-    self.companyList = [[NSMutableArray alloc]initWithArray:@[@"Apple mobile devices",@"Samsung mobile devices",@"Moto mobile devices",@"Microsoft mobile devices"]];
-    self.title = @"Mobile device makers";
-	self.productLogo = [[NSMutableArray alloc]initWithArray:@[@"AppleLogo.jpg", @"SamsungLogo.jpg", @"MotoLogo.jpg", @"MicrosoftLogo.jpg"]];
-	self.applePr = [[NSMutableArray alloc]initWithArray:@[@"iPad", @"iPod Touch",@"iPhone"]];
-	self.samsungPr = [[NSMutableArray alloc]initWithArray:@[@"Galaxy S4", @"Galaxy Note", @"Galaxy Tab"]];
-	self.motoPr = [[NSMutableArray alloc]initWithArray:@[@"slider",@"motog",@"360"]];
-	self.microsoftPr = [[NSMutableArray alloc]initWithArray:@[@"windows",@"phone",@"tablet"]];
 	
-	
-	
-    
-    
+//    self.companyList = [[NSMutableArray alloc]initWithArray:@[@"Apple mobile devices",@"Samsung mobile devices",@"Moto mobile devices",@"Microsoft mobile devices"]];
+//    self.title = @"Mobile device makers";
+//	self.productLogo = [[NSMutableArray alloc]initWithArray:@[@"AppleLogo.jpg", @"SamsungLogo.jpg", @"MotoLogo.jpg", @"MicrosoftLogo.jpg"]];
+//	self.applePr = [[NSMutableArray alloc]initWithArray:@[ipad, ipodTouch,iphone]];
+//	self.samsungPr = [[NSMutableArray alloc]initWithArray:@[@"Galaxy S4", @"Galaxy Note", @"Galaxy Tab"]];
+//	self.motoPr = [[NSMutableArray alloc]initWithArray:@[@"slider",@"motog",@"360"]];
+//	self.microsoftPr = [[NSMutableArray alloc]initWithArray:@[@"windows",@"phone",@"tablet"]];
+	self.dao = [[DAO alloc]init];
+	// call upon callback method
+	[self.dao initiation];
+	[self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +67,7 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.companyList count];
+    return [self.dao.companyList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,14 +76,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-		//[[cell imageView] setImage: [UIImage imageNamed:@"%@", [productLogo[indexPath]]]];
+		NSString *logoString = [[self.dao.companyList objectAtIndex:indexPath.row] logo];
+		cell.imageView.image = [UIImage imageNamed:logoString];
 
     }
     
     // Configure the cell...
     
-    cell.textLabel.text = [self.companyList objectAtIndex:[indexPath row]];
-	[[cell imageView] setImage:[UIImage imageNamed:[self.productLogo objectAtIndex:[indexPath row]]]];
+    cell.textLabel.text = [[self.dao.companyList objectAtIndex:[indexPath row]] name];
+//	[[cell imageView] setImage:[UIImage imageNamed:[self.logo objectAtIndex:[indexPath row]]]];
     return cell;
 }
 
@@ -100,20 +99,20 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
 	NSUInteger fromRow = [fromIndexPath row];
 	NSUInteger toRow = [toIndexPath row];
-	id rep = [self.companyList objectAtIndex:fromRow];
-	[self.companyList removeObjectAtIndex:fromRow];
-	[self.companyList insertObject:rep atIndex:toRow];
-	id repL = [self.productLogo objectAtIndex:fromRow];
-	[self.productLogo removeObjectAtIndex:fromRow];
-	[self.productLogo insertObject:repL atIndex:toRow];
+	id rep = [self.dao.companyList objectAtIndex:fromRow];
+	[self.dao.companyList removeObjectAtIndex:fromRow];
+	[self.dao.companyList insertObject:rep atIndex:toRow];
+//	id repL = [[self.dao.companyList objectAtIndex:fromRow]logo ];
+//	[[self.dao.companyList removeObjectAtIndex:fromRow] logo];
+//	[self.productLogo insertObject:repL.logo atIndex:toRow];
 }
 
 // delete rows
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSUInteger row = [indexPath row];
-	[self.companyList removeObjectAtIndex:row];
-	[self.productLogo removeObjectAtIndex:row];
+	[self.dao.companyList removeObjectAtIndex:row];
+//	[self.productLogo removeObjectAtIndex:row];
 	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	[tableView reloadData];
 	
@@ -155,28 +154,28 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	self.productViewController.company = [self.dao.companyList objectAtIndex:indexPath.row];
 	
-	
-	if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Apple mobile devices"]){
-		self.productViewController.title = @"Apple mobile devices";
-		self.productViewController.products = self.applePr;
-		self.productViewController.productLogo = @"AppleLogo.jpg";
-	}
-	else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Samsung mobile devices"]){
-		self.productViewController.title = @"Samsung mobile devices";
-		self.productViewController.products = self.samsungPr;
-		self.productViewController.productLogo = @"SamsungLogo.jpg";
-	}
-	else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Moto mobile devices"]){
-		self.productViewController.title = @"Moto mobile devices";
-		self.productViewController.products = self.motoPr;
-		self.productViewController.productLogo = @"MotoLogo.jpg";
-	}
-	else {
-		self.productViewController.title = @"Microsoft mobile devices";
-		self.productViewController.products = self.microsoftPr;
-		self.productViewController.productLogo = @"MicrosoftLogo.jpg";
-	}
+//	if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Apple mobile devices"]){
+//		self.productViewController.title = @"Apple mobile devices";
+//		self.productViewController.products = self.applePr;
+//		self.productViewController.productLogo = @"AppleLogo.jpg";
+//	}
+//	else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Samsung mobile devices"]){
+//		self.productViewController.title = @"Samsung mobile devices";
+//		self.productViewController.products = self.samsungPr;
+//		self.productViewController.productLogo = @"SamsungLogo.jpg";
+//	}
+//	else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Moto mobile devices"]){
+//		self.productViewController.title = @"Moto mobile devices";
+//		self.productViewController.products = self.motoPr;
+//		self.productViewController.productLogo = @"MotoLogo.jpg";
+//	}
+//	else {
+//		self.productViewController.title = @"Microsoft mobile devices";
+//		self.productViewController.products = self.microsoftPr;
+//		self.productViewController.productLogo = @"MicrosoftLogo.jpg";
+//	}
 	
 	[self.navigationController
 	 pushViewController:self.productViewController

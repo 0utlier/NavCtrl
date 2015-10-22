@@ -32,6 +32,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	[self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -73,7 +74,7 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.products count];
+    return [self.company.products count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,8 +85,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     // Configure the cell...
-    cell.textLabel.text = [self.products objectAtIndex:[indexPath row]];
-	[[cell imageView] setImage:[UIImage imageNamed:self.productLogo]];
+    cell.textLabel.text = [[self.company.products objectAtIndex:[indexPath row]]name];
+//	[[cell imageView] setImage:[UIImage imageNamed:self.company.products]logo];
 
     return cell;
 }
@@ -100,9 +101,9 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
 	NSUInteger fromRow = [fromIndexPath row];
 	NSUInteger toRow = [toIndexPath row];
-	id rep = [self.products objectAtIndex:fromRow];
-	[self.products removeObjectAtIndex:fromRow];
-	[self.products insertObject:rep atIndex:toRow];
+	id rep = [self.company.products objectAtIndex:fromRow];
+	[self.company.products removeObjectAtIndex:fromRow];
+	[self.company.products insertObject:rep atIndex:toRow];
 // if i need to have multiple images for each product
 //	id repL = [self.productLogo objectAtIndex:fromRow];
 //	[self.productLogo removeObjectAtIndex:fromRow];
@@ -113,7 +114,7 @@
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSUInteger row = [indexPath row];
-	[self.products removeObjectAtIndex:row];
+	[self.company.products removeObjectAtIndex:row];
 	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	[tableView reloadData];
 }
