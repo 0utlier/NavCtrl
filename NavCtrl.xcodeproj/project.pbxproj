@@ -27,6 +27,12 @@
 		AA57E36C1BD7E476004B0533 /* MicrosoftLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */; };
 		AA57E36D1BD7E476004B0533 /* MotoLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E3691BD7E476004B0533 /* MotoLogo.jpg */; };
 		AA57E36E1BD7E476004B0533 /* SamsungLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E36A1BD7E476004B0533 /* SamsungLogo.jpg */; };
+		AA711F601BD970D400D4A996 /* yourLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA711F5F1BD970D400D4A996 /* yourLogo.jpg */; };
+		AA711F621BD9723300D4A996 /* mylogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA711F611BD9723300D4A996 /* mylogo.jpg */; };
+		AA711F661BD991E800D4A996 /* addCompanyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA711F641BD991E800D4A996 /* addCompanyVC.m */; };
+		AA711F671BD991E800D4A996 /* addCompanyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA711F651BD991E800D4A996 /* addCompanyVC.xib */; };
+		AA711F6C1BD9921400D4A996 /* addProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA711F6A1BD9921400D4A996 /* addProductVC.m */; };
+		AA711F6D1BD9921400D4A996 /* addProductVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA711F6B1BD9921400D4A996 /* addProductVC.xib */; };
 		AA88A1991BD83D60001F0096 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A1981BD83D60001F0096 /* Company.m */; };
 		AA88A19E1BD83D9E001F0096 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A19D1BD83D9E001F0096 /* Product.m */; };
 		AA88A1A11BD85585001F0096 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A1A01BD85585001F0096 /* DAO.m */; };
@@ -71,6 +77,14 @@
 		AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MicrosoftLogo.jpg; sourceTree = "<group>"; };
 		AA57E3691BD7E476004B0533 /* MotoLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MotoLogo.jpg; sourceTree = "<group>"; };
 		AA57E36A1BD7E476004B0533 /* SamsungLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = SamsungLogo.jpg; sourceTree = "<group>"; };
+		AA711F5F1BD970D400D4A996 /* yourLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yourLogo.jpg; sourceTree = "<group>"; };
+		AA711F611BD9723300D4A996 /* mylogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mylogo.jpg; sourceTree = "<group>"; };
+		AA711F631BD991E800D4A996 /* addCompanyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCompanyVC.h; sourceTree = "<group>"; };
+		AA711F641BD991E800D4A996 /* addCompanyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCompanyVC.m; sourceTree = "<group>"; };
+		AA711F651BD991E800D4A996 /* addCompanyVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addCompanyVC.xib; sourceTree = "<group>"; };
+		AA711F691BD9921400D4A996 /* addProductVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addProductVC.h; sourceTree = "<group>"; };
+		AA711F6A1BD9921400D4A996 /* addProductVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addProductVC.m; sourceTree = "<group>"; };
+		AA711F6B1BD9921400D4A996 /* addProductVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addProductVC.xib; sourceTree = "<group>"; };
 		AA88A1971BD83D60001F0096 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		AA88A1981BD83D60001F0096 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		AA88A19C1BD83D9E001F0096 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
@@ -177,6 +191,8 @@
 				48A656E518163C1B00746D36 /* CompanyViewController.xib */,
 				48A656BB18163BF200746D36 /* Supporting Files */,
 				AA88A1A21BD855BC001F0096 /* DAO */,
+				AA711F681BD991F000D4A996 /* addCompanyVC */,
+				AA711F6E1BD9922600D4A996 /* addProductVC */,
 			);
 			path = NavCtrl;
 			sourceTree = "<group>";
@@ -187,7 +203,9 @@
 				AA57E3671BD7E476004B0533 /* AppleLogo.jpg */,
 				AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */,
 				AA57E3691BD7E476004B0533 /* MotoLogo.jpg */,
+				AA711F611BD9723300D4A996 /* mylogo.jpg */,
 				AA57E36A1BD7E476004B0533 /* SamsungLogo.jpg */,
+				AA711F5F1BD970D400D4A996 /* yourLogo.jpg */,
 				48A656ED1816468000746D36 /* Sunflower.gif */,
 				48A656BC18163BF200746D36 /* NavCtrl-Info.plist */,
 				48A656BD18163BF200746D36 /* InfoPlist.strings */,
@@ -213,6 +231,26 @@
 				48A656D618163BF200746D36 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA711F681BD991F000D4A996 /* addCompanyVC */ = {
+			isa = PBXGroup;
+			children = (
+				AA711F631BD991E800D4A996 /* addCompanyVC.h */,
+				AA711F641BD991E800D4A996 /* addCompanyVC.m */,
+				AA711F651BD991E800D4A996 /* addCompanyVC.xib */,
+			);
+			name = addCompanyVC;
+			sourceTree = "<group>";
+		};
+		AA711F6E1BD9922600D4A996 /* addProductVC */ = {
+			isa = PBXGroup;
+			children = (
+				AA711F691BD9921400D4A996 /* addProductVC.h */,
+				AA711F6A1BD9921400D4A996 /* addProductVC.m */,
+				AA711F6B1BD9921400D4A996 /* addProductVC.xib */,
+			);
+			name = addProductVC;
 			sourceTree = "<group>";
 		};
 		AA88A19A1BD83D70001F0096 /* Company Class */ = {
@@ -328,13 +366,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				48A656EE1816468000746D36 /* Sunflower.gif in Resources */,
+				AA711F601BD970D400D4A996 /* yourLogo.jpg in Resources */,
 				AA57E36C1BD7E476004B0533 /* MicrosoftLogo.jpg in Resources */,
 				AA57E36B1BD7E476004B0533 /* AppleLogo.jpg in Resources */,
 				AA57E36D1BD7E476004B0533 /* MotoLogo.jpg in Resources */,
 				AA57E36E1BD7E476004B0533 /* SamsungLogo.jpg in Resources */,
 				48A656E718163C1B00746D36 /* CompanyViewController.xib in Resources */,
+				AA711F621BD9723300D4A996 /* mylogo.jpg in Resources */,
 				48A656BF18163BF200746D36 /* InfoPlist.strings in Resources */,
+				AA711F6D1BD9921400D4A996 /* addProductVC.xib in Resources */,
 				AAB665571BD53B38004D100F /* WebViewController.xib in Resources */,
+				AA711F671BD991E800D4A996 /* addCompanyVC.xib in Resources */,
 				48A656C718163BF200746D36 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,12 +396,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA711F6C1BD9921400D4A996 /* addProductVC.m in Sources */,
 				AA88A19E1BD83D9E001F0096 /* Product.m in Sources */,
 				48A656E618163C1B00746D36 /* CompanyViewController.m in Sources */,
 				AA88A1991BD83D60001F0096 /* Company.m in Sources */,
 				AAB665561BD53B38004D100F /* WebViewController.m in Sources */,
 				AA88A1A11BD85585001F0096 /* DAO.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
+				AA711F661BD991E800D4A996 /* addCompanyVC.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
 				48A656EB18163F8700746D36 /* ProductViewController.m in Sources */,
 			);

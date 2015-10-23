@@ -16,5 +16,10 @@
 //@property (nonatomic, retain) NSString *productLogo;
 //@property (nonatomic, retain) NSURL *url;
 @property (nonatomic, retain) Company *company;
+@property (nonatomic, retain) NSIndexPath *indexToChange;
+@property (nonatomic, retain) UITextField *textField1;
+@property (nonatomic, retain) UITextField *textField2;
+@property (nonatomic, retain) UITextField *textField3;
+
 
 @end

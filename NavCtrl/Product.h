@@ -16,4 +16,6 @@
 @property (nonatomic, retain) NSString *logo;
 @property (nonatomic, retain) NSURL *url;
 
+
+
 @end

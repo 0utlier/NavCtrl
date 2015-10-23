@@ -30,35 +30,106 @@
     // Uncomment the following line to preserve selection between presentations.
      self.clearsSelectionOnViewWillAppear = NO;
  
+	UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject)];
+
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItems = @[self.editButtonItem, addButton];
+	
+	
+	
+	
 	[self.tableView reloadData];
+	
+}
+
+- (void)insertNewObject
+{
+	//display UIAlertView
+	UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Enter Product" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+	
+	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+	[alert show];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    // MOVED to parentView
-//    if ([self.title isEqualToString:@"Apple mobile devices"]) {
-////        self.products = @[@"iPad", @"iPod Touch",@"iPhone"];
-////		self.productLogo = @"AppleLogo.jpg";
-//	} else if ([self.title isEqualToString:@"Moto mobile devices"]) {
-////		self.products = @[@"slider",@"motog",@"360"];
-////		self.productLogo = @"MotoLogo.jpg";
-//	} else if ([self.title isEqualToString:@"Microsoft mobile devices"]) {
-////		self.products = @[@"windows",@"phone",@"tablet"];
-////		self.productLogo = @"MicrosoftLogo.jpg";
-//	} else {
-////        self.products = @[@"Galaxy S4", @"Galaxy Note", @"Galaxy Tab"];
-////		self.productLogo = @"SamsungLogo.jpg";
-//    }
-    [self.tableView reloadData];
+	[self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+	CGPoint p = [gestureRecognizer locationInView:self.tableView];
+	
+	NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+	self.indexToChange = indexPath;
+	if (indexPath == nil)
+		NSLog(@"long press on table view but not on a row");
+	else
+	{
+		if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+			NSLog(@"UIGestureRecognizerStateEnded");
+			//Do Whatever You want on End of Gesture
+		}
+		else if (gestureRecognizer.state == UIGestureRecognizerStateBegan){
+			
+			//			UIAlertView *alert = [[UIAlertView alloc] init];//WithTitle: @"Edit %@" message: @"" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+			UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 250, 100)];
+			
+			UITextField *textField1 = [[UITextField alloc] initWithFrame:CGRectMake(10,0,252,25)];
+			textField1.borderStyle = UITextBorderStyleRoundedRect;
+			textField1.placeholder = @"Enter Product";
+			textField1.text = [self.company.products[self.indexToChange.row] name];
+			textField1.keyboardAppearance = UIKeyboardAppearanceAlert;
+			textField1.delegate = self;
+			[v addSubview:textField1];
+			self.textField1 = textField1;
+			
+			UITextField *textField2 = [[UITextField alloc] initWithFrame:CGRectMake(10,30,252,25)];
+			textField2.placeholder = @"Enter URL";
+			textField2.text = [self.company.products[self.indexToChange.row] url];
+			//textField2.text = [[[self.tableView cellForRowAtIndexPath:self.indexToChange] textLabel]text];
+			textField2.borderStyle = UITextBorderStyleRoundedRect;
+			textField2.keyboardAppearance = UIKeyboardAppearanceAlert;
+			textField2.delegate = self;
+			[v addSubview:textField2];
+			self.textField2 = textField2;
+			
+			
+			UITextField *textField3 = [[UITextField alloc] initWithFrame:CGRectMake(10,60,252,25)];
+			textField3.placeholder = @"Enter Logo";
+			textField3.text = [self.company.products[self.indexToChange.row] logo];
+			textField3.borderStyle = UITextBorderStyleRoundedRect;
+			textField3.keyboardAppearance = UIKeyboardAppearanceAlert;
+			textField3.delegate = self;
+			[v addSubview:textField3];
+			self.textField3 = textField3;
+			
+			
+			UIAlertView *av = [[UIAlertView alloc] initWithTitle: [NSString stringWithFormat:@"Edit %@",[[[self.tableView cellForRowAtIndexPath:self.indexToChange] textLabel]text]]
+														 message:@"" delegate:self
+											   cancelButtonTitle:@"Cancel"
+											   otherButtonTitles:@"Change", nil];
+			[av setValue:v  forKey:@"accessoryView"];
+			[av show];
+			//			alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+			//			[alert show];
+			[av release];
+			//NSLog(@"UIGestureRecognizerStateBegan.");
+			
+			NSLog(@"long press on table view at row %d", indexPath.row);
+			
+			// Update ToDoStatus
+			[self.tableView reloadData];
+			//Do Whatever You want on Began of Gesture
+		}
+	}
 }
 
 #pragma mark - Table view data source
@@ -87,6 +158,10 @@
     // Configure the cell...
     cell.textLabel.text = [[self.company.products objectAtIndex:[indexPath row]]name];
 //	[[cell imageView] setImage:[UIImage imageNamed:self.company.products]logo];
+	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+	longPr.minimumPressDuration = 1.0; //seconds
+	[cell addGestureRecognizer:longPr];
+
 
     return cell;
 }
@@ -110,7 +185,7 @@
 //	[self.productLogo insertObject:repL atIndex:toRow];
 	
 }
-
+//delete rows
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSUInteger row = [indexPath row];
@@ -167,6 +242,47 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
  
+//// use text from input to create new company
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//	// only do the following if user hits ADD
+//	if (buttonIndex == 1) {
+//		NSString *tempTextField = [alertView textFieldAtIndex:0].text;
+//		if (!self.company.products) {
+//			self.company.products = [[NSMutableArray alloc]init];
+//		}
+//		
+//		Company *tempCompany = [[Company alloc]init];
+//		tempCompany.name = tempTextField;
+//		tempCompany.logo = @"myLogo.jpg";
+//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
+//		[self.company.products addObject:tempCompany];
+//		[self.tableView reloadData];
+//	}
+//}
+// use text from input to create new company
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	// only do the following if user hits ADD
+	if (buttonIndex == 1) {
+		if (!self.company.products) {
+			self.company.products = [[NSMutableArray alloc]init];
+		}
+		NSString *tempTextField0 = self.textField1.text;
+		NSString *tempTextField1 = self.textField2.text;
+		NSString *tempTextField2 = self.textField3.text;
+		
+		//		Company *tempCompany = [[Company alloc]init];
+		//		tempCompany.name = tempTextField;
+		//		tempCompany.logo = @"myLogo.jpg";
+		//	NSLog(@"stuff changed");
+		[self.company.products[self.indexToChange.row] setName: tempTextField0];
+		[self.company.products[self.indexToChange.row] setUrl: tempTextField1];
+		[self.company.products[self.indexToChange.row] setLogo: tempTextField2];
+		//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
+		NSLog(@"%ld", (long)buttonIndex);
+		//		[self.dao.companyList addObject:tempCompany];
+		[self.tableView reloadData];
+	}
+}
 
 
 @end
