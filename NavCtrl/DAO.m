@@ -35,6 +35,7 @@
 	apple.name = @"Apple";
 	apple.logo = @"AppleLogo.jpg";
 	apple.ticker = @"AAPL";
+//	apple.tickerPrice = ;
 	samsung.name = @"Samsung";
 	samsung.logo = @"samsungLogo.jpg";
 	samsung.ticker = @"SSNLF";

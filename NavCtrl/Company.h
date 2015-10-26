@@ -14,6 +14,7 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *logo;
 @property (nonatomic, retain) NSString *ticker;
+@property (nonatomic, retain) NSString *tickerPrice;
 @property (nonatomic, retain) NSMutableArray *products;
 
 

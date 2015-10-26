@@ -12,6 +12,8 @@
 #import "Product.h"
 #import "DAO.h"
 #include "addCompanyVC.h"
+#import "CompanyCellView.h"
+#import "utilities.h"
 
 @class ProductViewController;
 
@@ -27,6 +29,7 @@
 //@property (nonatomic, retain) NSMutableArray *motoPr;
 //@property (nonatomic, retain) NSMutableArray *microsoftPr;
 @property (nonatomic, strong) DAO *dao;
+@property (nonatomic, strong) utilities *utilities;
 
 @property (nonatomic, retain) IBOutlet  ProductViewController * productViewController;
 

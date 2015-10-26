@@ -40,12 +40,24 @@
 	// make an add button to make new company
 	self.navigationItem.rightBarButtonItem = addButton;
 	
+	// instantiate tableView
+	self.tableView.delegate=self;
+	self.tableView.dataSource=self;
+	
+	[self.tableView registerNib:[UINib nibWithNibName:@"CompanyCellView" bundle:nil] forCellReuseIdentifier:@"CompanyCellView"];
 	
 	
 	self.dao = [DAO sharedDAO];
 	// call upon callback method
 	[self.dao initiation];
+
+
+	
+	self.utilities = [[utilities alloc]init];
+	[self.utilities importStockPrice:self.tableView];
+
 	[self.tableView reloadData];
+
 }
 
 - (void)insertNewObject
@@ -160,27 +172,45 @@
 	return [self.dao.companyList count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	static NSString *CellIdentifier = @"Cell";
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-		NSString *logoString = [[self.dao.companyList objectAtIndex:indexPath.row] logo];
-		//		NSLog(@"%@",logoString);
-		cell.imageView.image = [UIImage imageNamed:logoString];
-	}
-	
-	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-	longPr.minimumPressDuration = 1.0; //seconds
-	[cell addGestureRecognizer:longPr];
-	
-	// Configure the cell...
-	cell.textLabel.text = [[self.dao.companyList objectAtIndex:[indexPath row]] name];
-	//	[[cell imageView] setImage:[UIImage imageNamed:[self.logo objectAtIndex:[indexPath row]]]];
-	return cell;
-}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//	static NSString *CellIdentifier = @"Cell";
+//	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//	if (cell == nil) {
+//		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//		NSString *logoString = [[self.dao.companyList objectAtIndex:indexPath.row] logo];
+//		//		NSLog(@"%@",logoString);
+//		cell.imageView.image = [UIImage imageNamed:logoString];
+//	}
+//	
+//	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+//	longPr.minimumPressDuration = 1.0; //seconds
+//	[cell addGestureRecognizer:longPr];
+//	
+//	// Configure the cell...
+//	cell.textLabel.text = [[self.dao.companyList objectAtIndex:[indexPath row]] name];
+//	UILabel *label = [[UILabel alloc]init];
+////	label = (UILabel *)[cell viewWithTag:1];
+//	label.text = [NSString stringWithFormat:@"%@",[[self.dao.companyList objectAtIndex:[indexPath row]] ticker]];
+//
+//	//	[[cell imageView] setImage:[UIImage imageNamed:[self.logo objectAtIndex:[indexPath row]]]];
+//	return cell;
+//}
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	CompanyCellView *tableViewCell=(CompanyCellView*)[self.tableView dequeueReusableCellWithIdentifier:@"CompanyCellView" forIndexPath:indexPath];
+	tableViewCell.companyName.text = [[self.dao.companyList objectAtIndex:[indexPath row]] name];
+	tableViewCell.companyStock.text = [[self.dao.companyList objectAtIndex:[indexPath row]] ticker];
+	tableViewCell.compantyStockPrice.text = [[self.dao.companyList objectAtIndex:[indexPath row]]tickerPrice];
+	NSString *logoString = [[self.dao.companyList objectAtIndex:indexPath.row] logo];
+//		NSLog(@"%@",logoString);
+	tableViewCell.CompanyLogo.image = [UIImage imageNamed:logoString];
+		UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+		longPr.minimumPressDuration = 1.0; //seconds
+		[tableViewCell addGestureRecognizer:longPr];
+
+	return tableViewCell;
+}
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
