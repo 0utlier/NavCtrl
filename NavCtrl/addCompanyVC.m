@@ -38,8 +38,9 @@
 	
 //	NSLog(@"logo tempCompany = %@",tempCompany.logo);
 	
-		[[[DAO sharedDAO] companyList] addObject:tempCompany];
-		//[self.tableView reloadData];
+//		[[[DAO sharedDAO] companyList] addObject:tempCompany];
+	[[DAO sharedDAO] addCompany:tempCompany];
+	//[self.tableView reloadData];
 	
 	[self.navigationController popViewControllerAnimated:YES];
 }

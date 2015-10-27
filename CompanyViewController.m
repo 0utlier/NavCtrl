@@ -49,7 +49,7 @@
 	
 	self.dao = [DAO sharedDAO];
 	// call upon callback method
-	[self.dao initiation];
+	[self.dao readUserDefaults];
 
 
 	
@@ -67,6 +67,7 @@
 	newCompany.modalTransitionStyle = UIModalPresentationFormSheet;
 	
 	[self.navigationController pushViewController:newCompany animated:YES];
+
 }
 // USE UIALERT INSTEAD
 //- (void)insertNewObject
@@ -149,6 +150,7 @@
 			
 			// Update ToDoStatus
 			[self.tableView reloadData];
+			
 			//Do Whatever You want on Began of Gesture
 		}
 	}
@@ -223,8 +225,9 @@
 	NSUInteger fromRow = [fromIndexPath row];
 	NSUInteger toRow = [toIndexPath row];
 	id rep = [self.dao.companyList objectAtIndex:fromRow];
-	[self.dao.companyList removeObjectAtIndex:fromRow];
-	[self.dao.companyList insertObject:rep atIndex:toRow];
+//	[self.dao.companyList removeObjectAtIndex:fromRow];
+//	[self.dao.companyList insertObject:rep atIndex:toRow];
+	[self.dao editCompanyAtRow:fromRow toRow:toRow rep:rep];
 	//	id repL = [[self.dao.companyList objectAtIndex:fromRow]logo ];
 	//	[[self.dao.companyList removeObjectAtIndex:fromRow] logo];
 	//	[self.productLogo insertObject:repL.logo atIndex:toRow];
@@ -234,7 +237,9 @@
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSUInteger row = [indexPath row];
-	[self.dao.companyList removeObjectAtIndex:row];
+	//[self.dao.companyList removeObjectAtIndex:row];
+	[self.dao deleteCompanyAtRow:row];
+	
 	//	[self.productLogo removeObjectAtIndex:row];
 	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	[tableView reloadData];
@@ -305,6 +310,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 	[self.dao.companyList[self.indexToChange.row] setName: tempTextField0];
 	[self.dao.companyList[self.indexToChange.row] setTicker: tempTextField1];
 	[self.dao.companyList[self.indexToChange.row] setLogo: tempTextField2];
+			[self.dao userDefaults];
 	//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
 			NSLog(@"%ld", (long)buttonIndex);
 	//		[self.dao.companyList addObject:tempCompany];

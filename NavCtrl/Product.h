@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Company.h"
 
-@interface Product : NSObject
+@interface Product : NSObject <NSCoding>
 
 // Products have these properites: name, logo, and URL
 @property (nonatomic, retain) NSString *name;

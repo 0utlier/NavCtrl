@@ -11,6 +11,9 @@
 @implementation DAO
 
 - (void)initiation{
+	//chris recommends an if statement to check if data exists, use it
+	// else initiate with values underneath
+		
 	// create all the companies
 	Company *apple = [[Company alloc]init];
 	Company *samsung = [[Company alloc]init];
@@ -70,6 +73,7 @@
 	samsung.products = [[NSMutableArray alloc]initWithArray:@[gS4,gNote,gTab]];
 	moto.products = [[NSMutableArray alloc]initWithArray:@[slider,motoG,m360]];
 	microsoft.products = [[NSMutableArray alloc]initWithArray:@[windows,wPhone,wTablet]];
+
 }
 // make the DAO a singleton
 + (instancetype)sharedDAO
@@ -82,5 +86,50 @@
 	});
 	return sharedDAO;
 }
+
+//Archive the data
+-(void)userDefaults
+{
+	// Saving companyList array data to NSUserDefaults
+	NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:self.companyList];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:encodedObject forKey:@"NSUDS-SAVE-DATA"];
+	[defaults synchronize];
+	NSLog(@"Data Saved");
+}
+
+//UNArachive the data
+-(void)readUserDefaults
+{
+	if([[NSUserDefaults standardUserDefaults] objectForKey:@"NSUDS-SAVE-DATA"] != nil) {
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		NSData *encodedObject = [defaults objectForKey:@"NSUDS-SAVE-DATA"];
+		self.companyList = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+	}
+	else{
+		[self initiation];
+		[self userDefaults];
+	}
+}
+
+-(void)addCompany:(id)newCompany{
+	[self.companyList addObject:newCompany];
+	[self userDefaults];
+}
+
+
+-(void)editCompanyAtRow:(NSUInteger)fromRow toRow:(NSUInteger)toRow rep:(id)rep {
+	[self.companyList removeObjectAtIndex:fromRow];
+	[self.companyList insertObject:rep atIndex:toRow];
+	//[self.companyList exchangeObjectAtIndex:fromRow withObjectAtIndex:toRow];
+	[self userDefaults];
+
+}
+
+-(void)deleteCompanyAtRow:(NSUInteger)row{
+	[self.companyList removeObjectAtIndex:row];
+	[self userDefaults];
+}
+
 
 @end

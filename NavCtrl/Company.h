@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "Product.h"
 
-@interface Company : NSObject
-// Company has these properties: name, logo, stock ticker, procuct array
+@interface Company : NSObject <NSCoding>
+
+// Company has these properties: name, logo, stock ticker, tickerPrice, procuct array
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *logo;
 @property (nonatomic, retain) NSString *ticker;
 @property (nonatomic, retain) NSString *tickerPrice;
 @property (nonatomic, retain) NSMutableArray *products;
+
+//- (id)initWithName:(NSString *)name logo:(NSString *)logo ticker:(NSString *)ticker tickerPrice:(NSString *)tickerPrice products:(NSMutableArray *)products;
 
 
 @end

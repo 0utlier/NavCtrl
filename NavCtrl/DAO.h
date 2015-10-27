@@ -18,6 +18,14 @@
 
 - (void)initiation;
 + (instancetype)sharedDAO;
+-(void)userDefaults;
+-(void)readUserDefaults;
+
+-(void)addCompany:(id)newCompany;
+-(void)editCompanyAtRow:(NSUInteger)fromRow toRow:(NSUInteger)toRow rep:(id)rep;
+-(void)deleteCompanyAtRow:(NSUInteger)row;
+
+
 
 
 @end
