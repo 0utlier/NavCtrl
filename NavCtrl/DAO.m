@@ -91,6 +91,13 @@
 -(void)userDefaults
 {
 	// Saving companyList array data to NSUserDefaults
+	NSString *path;
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	path = [paths objectAtIndex:0];
+	path = [path stringByAppendingPathComponent:@"navCtrlUser.plist"];
+	[NSKeyedArchiver archiveRootObject:self.companyList toFile:path];
+	NSLog(@"%@", path);
+
 	NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:self.companyList];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:encodedObject forKey:@"NSUDS-SAVE-DATA"];

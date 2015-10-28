@@ -190,7 +190,7 @@
 	// Return the number of rows in the section.
 	return [self.company.products count];
 }
-
+//cell configuration
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	static NSString *CellIdentifier = @"Cell";
@@ -216,16 +216,19 @@
 	// Return NO if you do not want the specified item to be editable.
 	return YES;
 }
+//edit rows
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
 	NSUInteger fromRow = [fromIndexPath row];
 	NSUInteger toRow = [toIndexPath row];
 	id rep = [self.company.products objectAtIndex:fromRow];
+//	[self.dao editCompanyAtRow:fromRow toRow:toRow rep:rep];
 	[self.company.products removeObjectAtIndex:fromRow];
 	[self.company.products insertObject:rep atIndex:toRow];
 	// if i need to have multiple images for each product
 	//	id repL = [self.productLogo objectAtIndex:fromRow];
 	//	[self.productLogo removeObjectAtIndex:fromRow];
 	//	[self.productLogo insertObject:repL atIndex:toRow];
+	[tableView reloadData];
 	
 }
 //delete rows

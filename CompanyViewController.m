@@ -225,6 +225,7 @@
 	NSUInteger fromRow = [fromIndexPath row];
 	NSUInteger toRow = [toIndexPath row];
 	id rep = [self.dao.companyList objectAtIndex:fromRow];
+//	NSLog(@"rep = %@ \n fromRow = %d", rep, fromRow);
 //	[self.dao.companyList removeObjectAtIndex:fromRow];
 //	[self.dao.companyList insertObject:rep atIndex:toRow];
 	[self.dao editCompanyAtRow:fromRow toRow:toRow rep:rep];
