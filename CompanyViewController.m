@@ -50,6 +50,8 @@
 	self.dao = [DAO sharedDAO];
 	// call upon callback method
 	[self.dao initiation];
+	[self.dao updateDB];
+	[self.dao createOrOpenDB];
 
 
 	
@@ -145,7 +147,7 @@
 			[av release];
 			//NSLog(@"UIGestureRecognizerStateBegan.");
 			
-			NSLog(@"long press on table view at row %d", indexPath.row);
+			NSLog(@"long press on table view at row %ld", (long)indexPath.row);
 			
 			// Update ToDoStatus
 			[self.tableView reloadData];
@@ -228,13 +230,23 @@
 	//	id repL = [[self.dao.companyList objectAtIndex:fromRow]logo ];
 	//	[[self.dao.companyList removeObjectAtIndex:fromRow] logo];
 	//	[self.productLogo insertObject:repL.logo atIndex:toRow];
+	NSMutableArray *companyIDArray = [[NSMutableArray alloc]init];
+
+	for (Company *company in self.dao.companyList) {
+		[companyIDArray addObject:company.companyID];
+	}
+//	NSLog(@"%@",companyIDArray);
+	[[DAO sharedDAO] editCompanyRows:companyIDArray];
+//	[tableView reloadData];
 }
 
 // delete rows
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSUInteger row = [indexPath row];
-	[self.dao.companyList removeObjectAtIndex:row];
+	Company *original = self.dao.companyList[indexPath.row];
+//	NSUInteger row = [indexPath row];
+	[self.dao deleteCompany:original];
+//	[self.dao.companyList removeObjectAtIndex:row];
 	//	[self.productLogo removeObjectAtIndex:row];
 	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	[tableView reloadData];
@@ -289,6 +301,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 }
 // use text from input to create new company
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	NSString *original = [self.dao.companyList[self.indexToChange.row] name];
 	// only do the following if user hits ADD
 		if (buttonIndex == 1) {
 			if (!self.dao.companyList) {
@@ -298,7 +311,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 			NSString *tempTextField1 = self.textField2.text;
 			NSString *tempTextField2 = self.textField3.text;
 	
-	//		Company *tempCompany = [[Company alloc]init];
+			Company *tempCompany = [[Company alloc]init];
 	//		tempCompany.name = tempTextField;
 	//		tempCompany.logo = @"myLogo.jpg";
 //	NSLog(@"stuff changed");
@@ -307,7 +320,9 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 	[self.dao.companyList[self.indexToChange.row] setLogo: tempTextField2];
 	//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
 			NSLog(@"%ld", (long)buttonIndex);
-	//		[self.dao.companyList addObject:tempCompany];
+			//how to NSLog or obtain value of the companyID, to use for WHERE cID='value'
+			[self.dao.companyList addObject:tempCompany];
+			[self.dao editCompany:tempTextField0 logo:tempTextField2 ticker:tempTextField1 original:original];
 	[self.tableView reloadData];
 		}
 }

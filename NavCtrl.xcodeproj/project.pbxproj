@@ -28,6 +28,8 @@
 		AA57E36C1BD7E476004B0533 /* MicrosoftLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */; };
 		AA57E36D1BD7E476004B0533 /* MotoLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E3691BD7E476004B0533 /* MotoLogo.jpg */; };
 		AA57E36E1BD7E476004B0533 /* SamsungLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E36A1BD7E476004B0533 /* SamsungLogo.jpg */; };
+		AA6697741BE16EF6006F0BA3 /* CompanyDataBase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = AA6697731BE16EE4006F0BA3 /* CompanyDataBase.sqlite */; };
+		AA6697761BE17571006F0BA3 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA6697751BE17571006F0BA3 /* libsqlite3.0.dylib */; };
 		AA711F601BD970D400D4A996 /* yourLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA711F5F1BD970D400D4A996 /* yourLogo.jpg */; };
 		AA711F621BD9723300D4A996 /* mylogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA711F611BD9723300D4A996 /* mylogo.jpg */; };
 		AA711F661BD991E800D4A996 /* addCompanyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA711F641BD991E800D4A996 /* addCompanyVC.m */; };
@@ -82,6 +84,8 @@
 		AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MicrosoftLogo.jpg; sourceTree = "<group>"; };
 		AA57E3691BD7E476004B0533 /* MotoLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MotoLogo.jpg; sourceTree = "<group>"; };
 		AA57E36A1BD7E476004B0533 /* SamsungLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = SamsungLogo.jpg; sourceTree = "<group>"; };
+		AA6697731BE16EE4006F0BA3 /* CompanyDataBase.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = CompanyDataBase.sqlite; sourceTree = "<group>"; };
+		AA6697751BE17571006F0BA3 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		AA711F5F1BD970D400D4A996 /* yourLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yourLogo.jpg; sourceTree = "<group>"; };
 		AA711F611BD9723300D4A996 /* mylogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mylogo.jpg; sourceTree = "<group>"; };
 		AA711F631BD991E800D4A996 /* addCompanyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCompanyVC.h; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA6697761BE17571006F0BA3 /* libsqlite3.0.dylib in Frameworks */,
 				48A656B718163BF200746D36 /* CoreGraphics.framework in Frameworks */,
 				48A656B918163BF200746D36 /* UIKit.framework in Frameworks */,
 				48A656B518163BF200746D36 /* Foundation.framework in Frameworks */,
@@ -178,6 +183,7 @@
 		48A656B318163BF200746D36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA6697751BE17571006F0BA3 /* libsqlite3.0.dylib */,
 				48A656B418163BF200746D36 /* Foundation.framework */,
 				48A656B618163BF200746D36 /* CoreGraphics.framework */,
 				48A656B818163BF200746D36 /* UIKit.framework */,
@@ -211,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				AA57E3671BD7E476004B0533 /* AppleLogo.jpg */,
+				AA6697731BE16EE4006F0BA3 /* CompanyDataBase.sqlite */,
 				AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */,
 				AA57E3691BD7E476004B0533 /* MotoLogo.jpg */,
 				AA711F611BD9723300D4A996 /* mylogo.jpg */,
@@ -394,6 +401,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA6697741BE16EF6006F0BA3 /* CompanyDataBase.sqlite in Resources */,
 				48A656EE1816468000746D36 /* Sunflower.gif in Resources */,
 				AA711F601BD970D400D4A996 /* yourLogo.jpg in Resources */,
 				AA57E36C1BD7E476004B0533 /* MicrosoftLogo.jpg in Resources */,

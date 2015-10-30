@@ -15,7 +15,8 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *logo;
 @property (nonatomic, retain) NSURL *url;
-
+@property (nonatomic, retain) NSString *company_ID;
+@property (nonatomic, retain) NSString *product_ID;
 
 
 @end

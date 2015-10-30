@@ -30,15 +30,20 @@
 - (IBAction)doneButton:(id)sender {
 //	NSLog(@"made it here");
 	NSString *tempTextField =  self.newCompanyText.text;
-	Company *tempCompany = [[Company alloc]init];
-	tempCompany.name = tempTextField;
-	tempCompany.logo = @"myLogo.jpg";
+//	Company *tempCompany = [[Company alloc]init];
+//	tempCompany.name = tempTextField;
+//	tempCompany.logo = @"myLogo.jpg";
 	//NSString *tempTextProductField =  self.newCompanyProductText.text;//[alertView textFieldAtIndex:0].text;
 	//tempCompany.products = [[NSMutableArray alloc]initWithArray:@[@"%@", tempTextProductField]];
-	
+	NSLog(@"%lu", (unsigned long)[[[DAO sharedDAO] companyList]count]);
+//	NSInteger *newIDNumber = (unsigned long)[[[DAO sharedDAO] companyList]count]+1;
+//	NSString *newIDNumberString = [[NSString stringWithFormat:@"lu", [newIDNumber intValue]];
+	NSString *newIDNumber = [NSString stringWithFormat:@"%lu",(unsigned long)[[[DAO sharedDAO] companyList]count]+1];
+	NSLog(@"%@", newIDNumber);
 //	NSLog(@"logo tempCompany = %@",tempCompany.logo);
 	
-		[[[DAO sharedDAO] companyList] addObject:tempCompany];
+	[[DAO sharedDAO] addCompany:tempTextField logo:@"myLogo.jpg" companyID:newIDNumber];
+//		[[[DAO sharedDAO] companyList] addObject:tempCompany];
 		//[self.tableView reloadData];
 	
 	[self.navigationController popViewControllerAnimated:YES];
