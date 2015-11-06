@@ -17,5 +17,6 @@
 @property (nonatomic, retain) NSString *tickerPrice;
 @property (nonatomic, retain) NSMutableArray *products;
 @property (nonatomic, retain) NSString *companyID;
+@property (nonatomic) double location;
 
 @end

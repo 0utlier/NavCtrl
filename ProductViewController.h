@@ -21,5 +21,8 @@
 @property (nonatomic, retain) UITextField *textField2;
 @property (nonatomic, retain) UITextField *textField3;
 
+//make a property for viewController
+@property (nonatomic, retain) WebViewController *webViewController;
+
 
 @end

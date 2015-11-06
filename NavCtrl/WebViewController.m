@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view from its nib.
 	//convert nsstring to nsurl
 	NSURL *myurl = [[NSURL alloc] initWithString:self.url];
-	// then load the url
+	// load the url
 	NSURLRequest *req = [[NSURLRequest alloc] initWithURL:myurl];
 	[self.myWebView loadRequest:req];
 }
@@ -42,6 +42,7 @@
 
 - (void)dealloc {
 	[_myWebView release];
+	NSLog(@"webview dealloc");
 	[super dealloc];
 }
 @end

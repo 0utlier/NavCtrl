@@ -7,22 +7,32 @@
 //
 
 #import "DAO.h"
+#import "NavControllerAppDelegate.h"
+
 
 @implementation DAO
+
+
+// uncomment to make the DAO a singleton
++ (instancetype)sharedDAO
 {
-	//	NSMutableArray *arrayOfPesron;
-	sqlite3 *personDB;
-	NSString *dbPathString;
+	static DAO *sharedDAO = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		sharedDAO = [[DAO alloc] init];
+		// Do any other initialisation stuff here
+	});
+	return sharedDAO;
 }
 
 - (void)initiation{
-	// create all the companies
+	// company creation
 	Company *apple = [[Company alloc]init];
 	Company *samsung = [[Company alloc]init];
 	Company *moto = [[Company alloc]init];
 	Company *microsoft = [[Company alloc]init];
 	
-	// create all the products
+	// product creation
 	Product *ipad = [[Product alloc]init];
 	Product *ipodTouch = [[Product alloc]init];
 	Product *iphone = [[Product alloc]init];
@@ -36,419 +46,473 @@
 	Product *wPhone = [[Product alloc]init];
 	Product *wTablet = [[Product alloc]init];
 	
-	// give the company class values (name, logo, ticker)
+	// company values (name, logo, ticker, companyID, location)
 	apple.name = @"Apple";
 	apple.logo = @"AppleLogo.jpg";
 	apple.ticker = @"AAPL";
+	apple.companyID = @"1";
+	apple.location = 1.00;
 	//	apple.tickerPrice = ;
 	samsung.name = @"Samsung";
 	samsung.logo = @"samsungLogo.jpg";
 	samsung.ticker = @"SSNLF";
+	samsung.companyID = @"2";
+	samsung.location = 2.00;
 	moto.name = @"Moto";
 	moto.logo = @"motoLogo.jpg";
 	moto.ticker = @"MSI";
+	moto.companyID = @"3";
+	moto.location = 3.00;
 	microsoft.name = @"Microsoft";
 	microsoft.logo = @"microsoftLogo.jpg";
 	microsoft.ticker = @"MSFT";
+	microsoft.companyID = @"4";
+	microsoft.location = 4.00;
 	
-	// give the products values
+	// products values (name, companyID, productID)
 	ipad.name = @"iPad";
+	ipad.company_ID = @"1";
+	ipad.product_ID = @"1";
 	ipodTouch.name = @"iPod Touch";
+	ipodTouch.company_ID = @"1";
+	ipodTouch.product_ID = @"2";
 	iphone.name = @"iPhone";
-	gS4.name = @"Galaxy S4";
-	gNote.name = @"Galaxy Note";
-	gTab.name = @"Galaxy Tab";
-	slider.name = @"Slider";
-	motoG.name = @"MotoG";
-	m360.name = @"360";
-	windows.name = @"Windows";
-	wPhone.name = @"Phone";
-	wTablet.name = @"Tablet";
+	iphone.company_ID = @"1";
+	iphone.product_ID = @"3";
 	
-	// initialize company array to call upon
+	gS4.name = @"Galaxy S4";
+	gS4.company_ID = @"2";
+	gS4.product_ID = @"1";
+	gNote.name = @"Galaxy Note";
+	gNote.company_ID = @"2";
+	gNote.product_ID = @"2";
+	gTab.name = @"Galaxy Tab";
+	gTab.company_ID = @"2";
+	gTab.product_ID = @"3";
+	
+	slider.name = @"Slider";
+	slider.company_ID = @"3";
+	slider.product_ID = @"1";
+	motoG.name = @"MotoG";
+	motoG.company_ID = @"3";
+	motoG.product_ID = @"2";
+	m360.name = @"360";
+	m360.company_ID = @"3";
+	m360.product_ID = @"3";
+	
+	windows.name = @"Windows";
+	windows.company_ID = @"4";
+	windows.product_ID = @"1";
+	wPhone.name = @"Phone";
+	wPhone.company_ID = @"4";
+	wPhone.product_ID = @"2";
+	wTablet.name = @"Tablet";
+	wTablet.company_ID = @"4";
+	wTablet.product_ID = @"3";
+	
+	// company list array
 	self.companyList = [[NSMutableArray alloc]initWithArray:@[apple,samsung,moto,microsoft]];
 	
-	// allocate space for products array
-	
-	//fill array for each company
+	//company's product array
 	apple.products = [[NSMutableArray alloc]initWithArray:@[ipad,ipodTouch,iphone]];
 	samsung.products = [[NSMutableArray alloc]initWithArray:@[gS4,gNote,gTab]];
 	moto.products = [[NSMutableArray alloc]initWithArray:@[slider,motoG,m360]];
 	microsoft.products = [[NSMutableArray alloc]initWithArray:@[windows,wPhone,wTablet]];
-}
-// make the DAO a singleton
-+ (instancetype)sharedDAO
-{
-	static DAO *sharedDAO = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		sharedDAO = [[DAO alloc] init];
-		// Do any other initialisation stuff here
-	});
-	return sharedDAO;
+	
+	// update the dataBase with fresh hard data
+	[self createDBFromObjects];
+	
 }
 
-//- (instancetype)initWithDatabaseFilename:(NSString *)dbFilename{
-//	// Set the documents directory path to the documentsDirectory property.
-//	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//	self.documentsDirectory = [paths objectAtIndex:0];
-//
-//	// Keep the database filename.
-//	self.databaseFilename = dbFilename;
-//
-//	// Copy the database file into the documents directory if necessary.
-//	[self copyDatabaseIntoDocumentsDirectory];
-//}
-
-// create or open existing dataBase
 -(void)updateDB
-{
-	char *error = NULL;
+{// if the file exists, reload. Otherwise, initiation
 	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
+	NSString *dbPathString = [docPath stringByAppendingPathComponent:@"DayTwelveData.sqlite"];
+	NSLog(@"\n%@\n\n", dbPathString);
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
-	if ([fileManager fileExistsAtPath:dbPathString])
-	{
-		const char *dbPath = [dbPathString UTF8String];
+	if (![fileManager fileExistsAtPath:dbPathString]) {
+		[self initiation];
 	}
 	else{
-		//copy SQLite file from bundle to documents directory
-		// Get the path to the database in the application package
-		NSString *databasePathFromApp = [[NSBundle mainBundle] pathForResource:@"CompanyDataBase" ofType:@"sqlite"];
-		//NSString *databasePathFromApp = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"wine.sqlite"];
-		
-		// Copy the database from the package to the users filesystem
-		[[NSFileManager defaultManager] copyItemAtPath:databasePathFromApp toPath:dbPathString error:nil];
-		//check if successful
-		if (error == nil) {
-			NSLog(@"it worked");
-		}
+		[self reloadDataFromContext];
 	}
 }
 
-- (void)createOrOpenDB
-{
-	sqlite3_stmt *statement ;
-	if (sqlite3_open([dbPathString UTF8String], &personDB)==SQLITE_OK)
-	{
-		[self.companyList removeAllObjects];
-		NSString *querySQL = [NSString stringWithFormat:@"SELECT * FROM Company ORDER BY location"];
-		const char *query_sql = [querySQL UTF8String];
-		if (sqlite3_prepare(personDB, query_sql, -1, &statement, NULL) == SQLITE_OK)
-		{
-			while (sqlite3_step(statement)== SQLITE_ROW)
-			{
-				NSString *name = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
-				NSString *logo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
-				NSString *ticker = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
-				NSString *companyID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
-				
-				Company *company = [[Company alloc]init];
-				[company setName:name];
-				[company setLogo:logo];
-				[company setTicker:ticker];
-				[company setCompanyID:companyID];
-				company.products = [[NSMutableArray alloc]init];
-				// add products
-				sqlite3_stmt *statement2 ;
-				NSString *querySQL = [NSString stringWithFormat:@"SELECT * FROM Products WHERE company_id = '%@' ORDER BY location", companyID];
-				const char *query_sql = [querySQL UTF8String];
-				if (sqlite3_prepare(personDB, query_sql, -1, &statement2, NULL) == SQLITE_OK)
-				{
-					while (sqlite3_step(statement2)== SQLITE_ROW)
-					{
-						NSString *name = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement2, 0)];
-						NSString *url = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement2, 1)];
-						//						NSString *logo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement2, 2)];
-						NSString *companyID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement2, 3)];
-						NSString *productID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement2, 5)];
-						
-						
-						Product *product = [[Product alloc]init];
-						[product setName:name];
-						[product setUrl:[NSURL URLWithString:url]];
-						//						[product setLogo:logo];
-						[product setCompany_ID:companyID];
-						[product setProduct_ID:productID];
-						
-						[company.products addObject:product];
-						
-					}
-				}
-				[self.companyList addObject:company];
-			}
-		}
-	}
-}
-
-#pragma Company Methods
-
--(void)addCompany:(NSString *)name logo:(NSString *)logo companyID:(NSString *)companyListLength //this is to add an ID number, which will be one more than the amount that's on there
-{
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
+-(void) reloadDataFromContext { // request for all the data from dataBase
+	[self.companyList removeAllObjects];
+	[self.companyListManaged removeAllObjects];
 	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
+	NSFetchRequest *request = [[NSFetchRequest alloc]init];
+	NSPredicate *p = [NSPredicate predicateWithFormat:@"name MATCHES '.*'"];
+	[request setPredicate:p];
+	
+	NSSortDescriptor *sortByLocation = [[NSSortDescriptor alloc]
+										initWithKey:@"location" ascending:YES];
+	
+	[request setSortDescriptors:[NSArray arrayWithObject:sortByLocation]];
+	
+	NSEntityDescription *company = [[self.managedObjectModel entitiesByName] objectForKey:@"Company"];
+	[request setEntity:company];
+	NSError *error = nil;
+	
+	//This gets data only from context, not from store
+	NSArray *result = [self.managedObjectContext executeFetchRequest:request error:&error];
+	self.companyList = [[NSMutableArray alloc] init];
+	
+	if(!result)
 	{
-		NSString *insertStmt = [NSString stringWithFormat:@"INSERT INTO Company (name,logo,ticker,companyID,location) VALUES ('%@','%@','','%@','%@')", name,logo,companyListLength,companyListLength];
-		const char *insert_stmt = [insertStmt UTF8String];
+		[NSException raise:@"Fetch Failed" format:@"Reason: %@", [error localizedDescription]];
+	}
+	else if([result count] == 0)
+	{
+		// cr: if result is 0 and file exists - it will be a never ending recursive call
+		// its better to call initiation
+		[self initiation];
+	}
+	else {
+		self.companyListManaged = [[NSMutableArray alloc]initWithArray:result];
+	}
+	
+	//make the NSObject array from NSMangaged Array
+	for (CompanyManaged *companyManaged in result) {
 		
-		NSLog(@"%@", insertStmt);
+		Company *company = [[Company alloc]init];
+		company.name = companyManaged.name;
+		company.logo = companyManaged.logo;
+		company.ticker = companyManaged.ticker;
+		company.companyID = companyManaged.companyID;
+		company.location = companyManaged.location;
+		company.products = [[NSMutableArray alloc]init];
 		
-		if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-		{
-			NSLog(@"Company added to DB");
-			Company *company = [[Company alloc] init];
-			[company setName:name];
-			[company setLogo:logo];
-			[company setCompanyID:companyListLength];
-			[self.companyList addObject:company];
+		for(ProductManaged *productManaged in companyManaged.products){
+			
+			// make nsmangedO from object
+			Product *product = [[Product alloc]init];
+			product.name = productManaged.name;
+			product.url = productManaged.url;
+			product.logo = productManaged.logo;
+			product.company_ID = productManaged.company_ID;
+			product.product_ID = productManaged.product_ID;
+			[company.products addObject:product];
 		}
-		sqlite3_close(personDB);
 		
-		[self updateDB];
+		[self.companyList addObject:company];
+	}
+	
+	
+	[self managedObjectContext];
+	[self saveContext];
+	
+	
+	
+	
+}
+
+
+-(void)createDBFromObjects {
+	
+	self.companyListManaged = [[NSMutableArray alloc]init];
+	NSManagedObjectContext *context = self.managedObjectContext;
+	//make an NSManaged array as well, using the existing companyList
+	for (Company *company in self.companyList) {
+		
+		
+		CompanyManaged *companyObject =(CompanyManaged*)[NSEntityDescription
+														 insertNewObjectForEntityForName:@"Company"
+														 inManagedObjectContext:context];
+		companyObject.name = company.name;
+		companyObject.logo = company.logo;
+		companyObject.ticker = company.ticker;
+		companyObject.companyID = company.companyID;
+		companyObject.location = company.location;
+		//companyObject.products = [[NSMutableArray alloc]init];
+		
+		for(Product *product in company.products){
+			// make nsmangedO from object
+			ProductManaged *productObject = (ProductManaged *) [NSEntityDescription
+																insertNewObjectForEntityForName:@"Product"
+																inManagedObjectContext:context];
+			productObject.name = product.name;
+			productObject.url = product.url;
+			productObject.logo = product.logo;
+			productObject.company_ID = product.company_ID;
+			productObject.product_ID = product.product_ID;
+			
+			[companyObject addProductsObject:productObject];
+		}
+		
+		[self.companyListManaged addObject:companyObject];
+		[self saveContext];
 	}
 }
 
-//this will become EDIT COMPANY
-//using the row path of index, the company should already have an ID associated
-//but then, wont ediitng the rows change that? - no becuase the class moves when we edit the rows (including any values that are apart of it (ie companyID))
+#pragma mark - Company Methods
+
+-(void)addCompany:(NSString *)name logo:(NSString *)logo companyID:(NSString *)companyListLength {
+	NSManagedObjectContext *context = self.managedObjectContext;
+	CompanyManaged *companyObject =(CompanyManaged*)[NSEntityDescription
+													 insertNewObjectForEntityForName:@"Company"
+													 inManagedObjectContext:context];
+	companyObject.name = name;
+	companyObject.logo = logo;
+	companyObject.companyID = companyListLength;
+	companyObject.location = [companyListLength integerValue];
+	companyObject.ticker = nil;
+	[self.companyListManaged addObject:companyObject];
+	
+	[self saveContext];
+	
+//	NSLog(@"Company added to DB");
+	
+	Company *company = [[Company alloc] init];
+	[company setName:name];
+	[company setLogo:logo];
+	[company setCompanyID:companyListLength];
+	[company setLocation:[companyListLength integerValue]];
+	[company setTicker:nil];
+	[self.companyList addObject:company];
+}
+
 
 -(void)editCompany:(NSString *)name logo:(NSString *)logo ticker:(NSString *)ticker original:(NSString *)original
 {
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
-		NSString *insertStmt = [NSString stringWithFormat:@"UPDATE Company SET name='%@',logo='%@',ticker='%@' WHERE name='%@'", name,logo,ticker,original];
-		NSLog(@"%@", insertStmt);
-		const char *insert_stmt = [insertStmt UTF8String];
-		if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-		{
-			NSLog(@"Company edited in DB");
-			//			Company *company = [[Company alloc] init];
-			//			[company setName:name];
-			//			[company setLogo:logo];
-			//			[company setTicker:ticker];
-			//			[self.companyList addObject:company];
+	for (CompanyManaged *company in self.companyListManaged) {
+		if ([company.name isEqualToString:original]) {
+			
+			company.name = name;
+			company.logo = logo;
+			company.ticker = ticker;
+			
 		}
-		sqlite3_close(personDB);
-		
-		[self updateDB];
+	}
+	[self saveContext];
+}
+
+
+-(void)deleteCompany:(Company *)company
+{
+	// remove the NSManagedObject
+	for (CompanyManaged *companyManaged in self.companyListManaged) {
+		if ([companyManaged.name isEqualToString:company.name]) {
+			//	NSMutableSet *mutableSet = [NSMutableSet setWithSet:companyManaged.products];
+			//	[mutableSet removeAllObjects];
+			
+			for (ProductManaged *productManaged in companyManaged.products) {
+				[self.managedObjectContext deleteObject:productManaged];
+			}
+			[companyManaged removeProducts:companyManaged.products];
+			[self.companyListManaged removeObject:companyManaged];
+			
+			[self.managedObjectContext deleteObject:companyManaged];
+			//			NSLog(@"Removed NSMgm object");
+			break;
+		}
+	}
+	[self saveContext];
+	[self.companyList removeObject:company];
+}
+
+
+- (void)editCompanyRows:(Company *)companyFrom locationFrom:(double)locationFrom locationTo:(double)locationTo locationNextTo:(double)locationNextTo
+{
+	for (CompanyManaged *companyManaged in self.companyListManaged) {
+		if (companyManaged.location == locationFrom) {
+			double averageLocation =  (locationTo + locationNextTo)/2;
+			companyManaged.location = averageLocation;
+		}
+	}
+	for (Company *company in self.companyList) {
+		if (company.location == locationFrom) {
+			double averageLocation =  (locationTo + locationNextTo)/2;
+			company.location = averageLocation;
+		}
+	}
+	[self saveContext];
+}
+
+
+#pragma mark - Product Methods
+
+
+-(void)addProduct:(NSString *)name url:(NSString *)url logo:(NSString *)logo company_id:(NSString *)company_id product_id:(NSString *)product_id
+{
+	NSManagedObjectContext *context = self.managedObjectContext;
+	ProductManaged *productObject =(ProductManaged*)[NSEntityDescription
+													 insertNewObjectForEntityForName:@"Product"
+													 inManagedObjectContext:context];
+	productObject.name = name;
+	productObject.url = url;
+	productObject.logo = logo;
+	productObject.company_ID = company_id;
+	productObject.product_ID = product_id;
+
+	for (CompanyManaged *companyManaged in self.companyListManaged) {
+		if (companyManaged.companyID == company_id) {
+			[companyManaged addProductsObject:productObject];
+			break;
+		}
+	}
+	[self saveContext];
+//	NSLog(@"Company added to DB");
+	
+	Product *product = [[Product alloc] init];
+	[product setName:name];
+	[product setLogo:logo];
+	[product setCompany_ID:company_id];
+	[product setProduct_ID:product_id];
+	
+	for (Company *company in self.companyList) {
+		if (company.companyID == company_id) {
+			[company.products addObject:product];
+			break;
+		}
 	}
 }
 
--(void)deleteCompany: (Company *)company
+- (void)editProduct:(NSString *)name url:(NSString *)url logo:(NSString *)logo original:(NSString *)original company:(Company *)company
 {
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
-		NSString *insertStmt = [NSString stringWithFormat:@"DELETE FROM Company WHERE name='%@'", company.name];
-		NSLog(@"%@", insertStmt);
-		const char *insert_stmt = [insertStmt UTF8String];
-		if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-		{
-			NSLog(@"Company REMOVED in DB");
-			//			Company *company = [[Company alloc] init];
-			//			[company setName:name];
-			//			[company setLogo:logo];
-			//			[company setTicker:ticker];
-			[self.companyList removeObject:company];
+	for (CompanyManaged *companyManaged in self.companyListManaged) {
+		if ([companyManaged.name isEqualToString:company.name]) {
+			for (ProductManaged *productManaged in companyManaged.products) {
+				if ([productManaged.name isEqualToString:original]) {
+					
+					productManaged.name = name;
+					productManaged.logo = logo;
+					productManaged.url = url;
+				}
+			}
 		}
-		sqlite3_close(personDB);
-		
-		[self updateDB];
 	}
+	[self saveContext];
+}
+
+
+-(void)deleteProduct:(Product *)product company:(Company *)company // Does this needs to delete the product only? Or do I need to delete the relationship between that product and the company
+{
 	
+	for (CompanyManaged *companyManaged in self.companyListManaged) {
+		if ([companyManaged.name isEqualToString:company.name]) {
+			for (ProductManaged *productManaged in companyManaged.products) {
+				if ([productManaged.name isEqualToString:product.name]) {
+					NSMutableSet *mutableSet = [NSMutableSet setWithSet:companyManaged.products];
+					[mutableSet removeObject:productManaged];
+					[self.managedObjectContext deleteObject:productManaged];
+				}
+			}
+			NSLog(@"Removed NSMgm object");
+			break;
+		}
+	}
+	[self saveContext];
+	[company.products removeObject:product];
+}
+
+- (void)editProductRows:(NSMutableArray *)productIDArray company:(Company *)company
+{
+	for (CompanyManaged *companyManaged in self.companyListManaged) {
+		if ([companyManaged.name isEqualToString: company.name]){
+			for (ProductManaged *productManaged in companyManaged.products) {
+				for (int i = 0; i < [productIDArray count]; i++) {
+					productManaged.product_ID = productIDArray[i];
+					
+				}
+			}
+		}
+	}
+	[self saveContext];
+}
+
+#pragma mark - Application's Documents directory
+
+// Returns the URL to the application's Documents directory.
+- (NSURL *)applicationDocumentsDirectory
+{
+	return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (void)saveContext
+{
+	NSError *error = nil;
+	NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+	if (managedObjectContext != nil) {
+		if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+			// Replace this implementation with code to handle the error appropriately.
+			// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			abort();
+		}
+	}
 }
 /*
- -(void)editCompanyRows: (Company *)companyFrom locationFrom:(NSUInteger *)locationFrom companyTo:(Company *)companyTo locationTo:(NSUInteger *)locationTo
+ -(void) saveChanges
  {
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
- NSString *insertStmt = [NSString stringWithFormat:@"UPDATE Company SET location = '%lu' WHERE name = '%@'; UPDATE Company SET location = '%lu' WHERE name = '%@'",locationFrom, companyFrom.name, locationTo, companyTo.name];
- NSLog(@"%@", insertStmt);
- const char *insert_stmt = [insertStmt UTF8String];
- if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
- {
- NSLog(@"Company REMOVED in DB");
- //			Company *company = [[Company alloc] init];
- //			[company setName:name];
- //			[company setLogo:logo];
- //			[company setTicker:ticker];
- //			[self.companyList removeObject:company];
- }
- sqlite3_close(personDB);
- 
- [self updateDB];
+	NSError *err = nil;
+	BOOL successful = [context save:&err];
+	if(!successful){
+ NSLog(@"Error saving: %@", [err localizedDescription]);
 	}
-	
+	NSLog(@"Data Saved");
  }
  */
 
--(void)editCompanyRows:(NSMutableArray *)companyIDArray
+
+#pragma mark - Core Data stack
+
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+// Returns the managed object context for the application.
+// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+- (NSManagedObjectContext *)managedObjectContext
 {
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
-		for (int i = 0; i < [companyIDArray count]; i++) {
-			NSString *insertStmt = [NSString stringWithFormat:@"UPDATE Company SET location = '%d' WHERE companyID = '%@'", i, companyIDArray[i]];
-			NSLog(@"%@", insertStmt);
-			const char *insert_stmt = [insertStmt UTF8String];
-			if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-			{
-				NSLog(@"Company MOVED in DB");
-				//			Company *company = [[Company alloc] init];
-				//			[company setName:name];
-				//			[company setLogo:logo];
-				//			[company setTicker:ticker];
-				//			[self.companyList removeObject:company];
-			}
-			
-		}
+	if (_managedObjectContext != nil) {
+		return _managedObjectContext;
 	}
-	sqlite3_close(personDB);
-	[self updateDB];
 	
+	NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+	if (coordinator != nil) {
+		_managedObjectContext = [[NSManagedObjectContext alloc] init];
+		[_managedObjectContext setPersistentStoreCoordinator:coordinator];
+	}
+	return _managedObjectContext;
 }
 
-#pragma Product Methods
--(void)addProduct:(NSString *)name url:(NSString *)url logo:(NSString *)logo company_id:(NSString *)company_id product_id:(NSString *)product_id
-//this is to add an ID number, which will be the same as the value of the company's company_ID
-//product id will be length of the products
+// Returns the managed object model for the application.
+// If the model doesn't already exist, it is created from the application's model.
+- (NSManagedObjectModel *)managedObjectModel
 {
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
-		NSString *insertStmt = [NSString stringWithFormat:@"INSERT INTO Products (name,url,logo,company_id) VALUES ('%@','%@','%@','%@')", name,url,logo,company_id];
-		const char *insert_stmt = [insertStmt UTF8String];
-		
-		NSLog(@"%@", insertStmt);
-		
-		if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-		{
-			NSLog(@"Product added to DB");
-			Product *product = [[Product alloc] init];
-			[product setName:name];
-			[product setUrl:url];
-			[product setLogo:logo];
-			[product setCompany_ID:company_id];
-			//			[self.companyList addObject:company];
-		}
-		sqlite3_close(personDB);
-		
-		[self updateDB];
+	if (_managedObjectModel != nil) {
+		return _managedObjectModel;
 	}
+	NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"dataModel" withExtension:@"momd"]; //dataModel.xcdatamodeld
+	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+	return _managedObjectModel;
 }
 
--(void)editProduct:(NSString *)name url:(NSString *)url logo:(NSString *)logo original:(NSString *)original
+// Returns the persistent store coordinator for the application.
+// If the coordinator doesn't already exist, it is created and the application's store added to it.
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
-		NSString *insertStmt = [NSString stringWithFormat:@"UPDATE Products SET name='%@',url='%@',logo='%@' WHERE name='%@'", name,url,logo,original];
-		NSLog(@"%@", insertStmt);
-		const char *insert_stmt = [insertStmt UTF8String];
-		if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-		{
-			NSLog(@"Product edited in DB");
-			//			Company *company = [[Company alloc] init];
-			//			[company setName:name];
-			//			[company setLogo:logo];
-			//			[company setTicker:ticker];
-			//			[self.companyList addObject:company];
-		}
-		sqlite3_close(personDB);
-		
-		[self updateDB];
+	if (_persistentStoreCoordinator != nil) {
+		return _persistentStoreCoordinator;
 	}
+	
+	NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"DayTwelveData.sqlite"];
+	
+	NSError *error = nil;
+	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+	if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+		
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+	
+	return _persistentStoreCoordinator;
 }
 
--(void)deleteProduct: (Product *)product
-{
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
-		NSString *insertStmt = [NSString stringWithFormat:@"DELETE FROM Products WHERE name='%@'", product.name];
-		NSLog(@"%@", insertStmt);
-		const char *insert_stmt = [insertStmt UTF8String];
-		if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-		{
-			NSLog(@"Product REMOVED in DB");
-			//			Company *company = [[Company alloc] init];
-			//			[company setName:name];
-			//			[company setLogo:logo];
-			//			[company setTicker:ticker];
-			//			[self.companyList removeObject:company];
-		}
-		sqlite3_close(personDB);
-		
-		[self updateDB];
-	}
-	
-}
-
--(void)editProductRows:(NSMutableArray *)productIDArray
-{
-	char *error;
-	NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *docPath = [path objectAtIndex:0];
-	dbPathString = [docPath stringByAppendingPathComponent:@"CompanyDataBase"];
-	
-	if (sqlite3_open([dbPathString UTF8String], &personDB) == SQLITE_OK)
-	{
-		for (int i = 0; i < [productIDArray count]; i++) {
-			NSString *insertStmt = [NSString stringWithFormat:@"UPDATE Products SET location = '%d' WHERE product_id = '%@'", i, productIDArray[i]];
-			NSLog(@"%@", insertStmt);
-			const char *insert_stmt = [insertStmt UTF8String];
-			if (sqlite3_exec(personDB, insert_stmt, NULL, NULL, &error) == SQLITE_OK)
-			{
-				NSLog(@"Product MOVED in DB");
-				//			Company *company = [[Company alloc] init];
-				//			[company setName:name];
-				//			[company setLogo:logo];
-				//			[company setTicker:ticker];
-				//			[self.companyList removeObject:company];
-			}
-			
-		}
-	}
-	sqlite3_close(personDB);
-	[self updateDB];
-	
-}
 
 
 @end

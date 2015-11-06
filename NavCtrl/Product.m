@@ -10,4 +10,19 @@
 
 @implementation Product
 
+-(void)dealloc{
+	[_name release];
+	[_logo release];
+	[_url release];
+	[_company_ID release];
+	[_product_ID release];
+	_name = nil;
+	_logo = nil;
+//	_ticker = nil;
+//	_tickerPrice = nil;
+	
+	[super dealloc];
+}
+
+
 @end

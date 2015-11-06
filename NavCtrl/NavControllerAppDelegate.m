@@ -8,6 +8,7 @@
 
 #import "NavControllerAppDelegate.h"
 #import "CompanyViewController.h"
+#import <CoreData/CoreData.h>
 
 @implementation NavControllerAppDelegate
 
@@ -65,5 +66,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

@@ -15,7 +15,9 @@
 
 @implementation CompanyViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+// uncomment this to initialiaze the view without xib
+/*
+ - (id)initWithStyle:(UITableViewStyle)style
 {
 	self = [super initWithStyle:style];
 	
@@ -24,6 +26,7 @@
 	}
 	return self;
 }
+*/
 
 - (void)viewDidLoad
 {
@@ -37,48 +40,31 @@
 	
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject)];
 	
-	// make an add button to make new company
+	// Uncomment the following line to add button to make new company
 	self.navigationItem.rightBarButtonItem = addButton;
 	
 	// instantiate tableView
 	self.tableView.delegate=self;
 	self.tableView.dataSource=self;
-	
 	[self.tableView registerNib:[UINib nibWithNibName:@"CompanyCellView" bundle:nil] forCellReuseIdentifier:@"CompanyCellView"];
 	
-	
 	self.dao = [DAO sharedDAO];
-	// call upon callback method
-	[self.dao initiation];
 	[self.dao updateDB];
-	[self.dao createOrOpenDB];
-
-
 	
 	self.utilities = [[utilities alloc]init];
 	[self.utilities importStockPrice:self.tableView];
-
 	[self.tableView reloadData];
 
 }
 
+
 - (void)insertNewObject
 {
 	addCompanyVC *newCompany = [[addCompanyVC alloc]init];
-	//define transition style
 	newCompany.modalTransitionStyle = UIModalPresentationFormSheet;
 	
 	[self.navigationController pushViewController:newCompany animated:YES];
 }
-// USE UIALERT INSTEAD
-//- (void)insertNewObject
-//{
-//	//display UIAlertView
-//	UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Enter Company" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
-//
-//	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-//	[alert show];
-//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -90,7 +76,6 @@
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
 	CGPoint p = [gestureRecognizer locationInView:self.tableView];
-	
 	NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
 	self.indexToChange = indexPath;
 	if (indexPath == nil)
@@ -99,11 +84,9 @@
 	{
 		if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
 			NSLog(@"UIGestureRecognizerStateEnded");
-			//Do Whatever You want on End of Gesture
 		}
 		else if (gestureRecognizer.state == UIGestureRecognizerStateBegan){
 			
-			//			UIAlertView *alert = [[UIAlertView alloc] init];//WithTitle: @"Edit %@" message: @"" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
 			UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 250, 100)];
 			
 			UITextField *textField1 = [[UITextField alloc] initWithFrame:CGRectMake(10,0,252,25)];
@@ -118,7 +101,6 @@
 			UITextField *textField2 = [[UITextField alloc] initWithFrame:CGRectMake(10,30,252,25)];
 			textField2.placeholder = @"Enter Ticker";
 			textField2.text = [self.dao.companyList[self.indexToChange.row] ticker];
-			//textField2.text = [[[self.tableView cellForRowAtIndexPath:self.indexToChange] textLabel]text];
 			textField2.borderStyle = UITextBorderStyleRoundedRect;
 			textField2.keyboardAppearance = UIKeyboardAppearanceAlert;
 			textField2.delegate = self;
@@ -142,16 +124,10 @@
 											   otherButtonTitles:@"Change", nil];
 			[av setValue:v  forKey:@"accessoryView"];
 			[av show];
-			//			alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-			//			[alert show];
 			[av release];
-			//NSLog(@"UIGestureRecognizerStateBegan.");
 			
-			NSLog(@"long press on table view at row %ld", (long)indexPath.row);
-			
-			// Update ToDoStatus
+//			NSLog(@"long press on table view at row %ld", (long)indexPath.row);
 			[self.tableView reloadData];
-			//Do Whatever You want on Began of Gesture
 		}
 	}
 }
@@ -174,31 +150,6 @@
 	return [self.dao.companyList count];
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//	static NSString *CellIdentifier = @"Cell";
-//	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//	if (cell == nil) {
-//		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//		NSString *logoString = [[self.dao.companyList objectAtIndex:indexPath.row] logo];
-//		//		NSLog(@"%@",logoString);
-//		cell.imageView.image = [UIImage imageNamed:logoString];
-//	}
-//	
-//	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-//	longPr.minimumPressDuration = 1.0; //seconds
-//	[cell addGestureRecognizer:longPr];
-//	
-//	// Configure the cell...
-//	cell.textLabel.text = [[self.dao.companyList objectAtIndex:[indexPath row]] name];
-//	UILabel *label = [[UILabel alloc]init];
-////	label = (UILabel *)[cell viewWithTag:1];
-//	label.text = [NSString stringWithFormat:@"%@",[[self.dao.companyList objectAtIndex:[indexPath row]] ticker]];
-//
-//	//	[[cell imageView] setImage:[UIImage imageNamed:[self.logo objectAtIndex:[indexPath row]]]];
-//	return cell;
-//}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	CompanyCellView *tableViewCell=(CompanyCellView*)[self.tableView dequeueReusableCellWithIdentifier:@"CompanyCellView" forIndexPath:indexPath];
 	tableViewCell.companyName.text = [[self.dao.companyList objectAtIndex:[indexPath row]] name];
@@ -220,68 +171,43 @@
 	// Return NO if you do not want the specified item to be editable.
 	return YES;
 }
+
 // edit row order
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-	NSUInteger fromRow = [fromIndexPath row];
-	NSUInteger toRow = [toIndexPath row];
-	id rep = [self.dao.companyList objectAtIndex:fromRow];
+	double fromRow = [fromIndexPath row];
+	double toRow = [toIndexPath row];
+	
+	Company *rep = [self.dao.companyList objectAtIndex:fromRow];
+	Company *repTo = [self.dao.companyList objectAtIndex:toRow];
+	
+	double fromLocation = rep.location;
+	double toLocation = repTo.location;
+	double nextLocation = 0;
+	//if its the last spot
+	if (toRow + 1 >= [self.dao.companyList count]) {
+		nextLocation = toLocation + 1;
+	}
+//	if its the first spot
+	else if (toRow == 0.00	){
+		nextLocation = toLocation - 1;
+	}
+	else{
+		Company *repNext = [self.dao.companyList objectAtIndex:toRow + 1];
+		nextLocation = repNext.location;
+	}
 	[self.dao.companyList removeObjectAtIndex:fromRow];
 	[self.dao.companyList insertObject:rep atIndex:toRow];
-	//	id repL = [[self.dao.companyList objectAtIndex:fromRow]logo ];
-	//	[[self.dao.companyList removeObjectAtIndex:fromRow] logo];
-	//	[self.productLogo insertObject:repL.logo atIndex:toRow];
-	NSMutableArray *companyIDArray = [[NSMutableArray alloc]init];
-
-	for (Company *company in self.dao.companyList) {
-		[companyIDArray addObject:company.companyID];
-	}
-//	NSLog(@"%@",companyIDArray);
-	[[DAO sharedDAO] editCompanyRows:companyIDArray];
-//	[tableView reloadData];
+	[[DAO sharedDAO] editCompanyRows:rep locationFrom:fromLocation locationTo:toLocation locationNextTo:nextLocation];
 }
 
 // delete rows
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	Company *original = self.dao.companyList[indexPath.row];
-//	NSUInteger row = [indexPath row];
 	[self.dao deleteCompany:original];
-//	[self.dao.companyList removeObjectAtIndex:row];
-	//	[self.productLogo removeObjectAtIndex:row];
 	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	[tableView reloadData];
-	
 }
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-
-// Override to support rearranging the table view.
-//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-//{
-//}
-
-
-
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	// Return NO if you do not want the item to be re-orderable.
-	return YES;
-}
-
 
 
 #pragma mark - Table view delegate
@@ -299,33 +225,40 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 	
 	
 }
+
 // use text from input to create new company
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	NSString *original = [self.dao.companyList[self.indexToChange.row] name];
 	// only do the following if user hits ADD
-		if (buttonIndex == 1) {
-			if (!self.dao.companyList) {
-				self.dao.companyList = [[NSMutableArray alloc]init];
-			}
-			NSString *tempTextField0 = self.textField1.text;
-			NSString *tempTextField1 = self.textField2.text;
-			NSString *tempTextField2 = self.textField3.text;
-	
-			Company *tempCompany = [[Company alloc]init];
-	//		tempCompany.name = tempTextField;
-	//		tempCompany.logo = @"myLogo.jpg";
-//	NSLog(@"stuff changed");
-	[self.dao.companyList[self.indexToChange.row] setName: tempTextField0];
-	[self.dao.companyList[self.indexToChange.row] setTicker: tempTextField1];
-	[self.dao.companyList[self.indexToChange.row] setLogo: tempTextField2];
-	//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
-			NSLog(@"%ld", (long)buttonIndex);
-			//how to NSLog or obtain value of the companyID, to use for WHERE cID='value'
-			[self.dao.companyList addObject:tempCompany];
-			[self.dao editCompany:tempTextField0 logo:tempTextField2 ticker:tempTextField1 original:original];
-	[self.tableView reloadData];
+	if (buttonIndex == 1) {
+		if (!self.dao.companyList) {
+			self.dao.companyList = [[NSMutableArray alloc]init];
 		}
+		NSString *tempTextField0 = self.textField1.text;
+		NSString *tempTextField1 = self.textField2.text;
+		NSString *tempTextField2 = self.textField3.text;
+		
+		[self.dao.companyList[self.indexToChange.row] setName: tempTextField0];
+		[self.dao.companyList[self.indexToChange.row] setTicker: tempTextField1];
+		[self.dao.companyList[self.indexToChange.row] setLogo: tempTextField2];
+		//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
+		//		NSLog(@"%ld", (long)buttonIndex);
+		
+		CompanyManaged *comp = [self.dao.companyListManaged  objectAtIndex:self.indexToChange.row];
+		[self.dao editCompany:tempTextField0 logo:tempTextField2 ticker:tempTextField1 original:original];
+		[self.tableView reloadData];
+	}
 }
 
+-(void)dealloc {
+	[_dao release];
+	[_utilities release];
+	[_indexToChange release];
+	[_productViewController release];
+	[_textField1 release];
+	[_textField2 release];
+	[_textField3 release];
+	[super dealloc];
+}
 
 @end

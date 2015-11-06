@@ -23,7 +23,12 @@
 		48A656E718163C1B00746D36 /* CompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48A656E518163C1B00746D36 /* CompanyViewController.xib */; };
 		48A656EB18163F8700746D36 /* ProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A656E918163F8700746D36 /* ProductViewController.m */; };
 		48A656EE1816468000746D36 /* Sunflower.gif in Resources */ = {isa = PBXBuildFile; fileRef = 48A656ED1816468000746D36 /* Sunflower.gif */; };
+		AA12FA891BE8016A00710414 /* dataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA12FA871BE8016A00710414 /* dataModel.xcdatamodeld */; };
+		AA12FA8B1BE8078800710414 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA12FA8A1BE8078800710414 /* CoreData.framework */; };
 		AA4C2E8A1BDE6A4E00BC9BE3 /* utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4C2E891BDE6A4E00BC9BE3 /* utilities.m */; };
+		AA4F4EED1BE91AD500B38835 /* CompanyManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4F4EEC1BE91AD500B38835 /* CompanyManaged.m */; };
+		AA4F4EF01BE91AE100B38835 /* ProductManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4F4EEF1BE91AE100B38835 /* ProductManaged.m */; };
+		AA4F4EF21BE9304D00B38835 /* dataModel.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = AA12FA871BE8016A00710414 /* dataModel.xcdatamodeld */; };
 		AA57E36B1BD7E476004B0533 /* AppleLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E3671BD7E476004B0533 /* AppleLogo.jpg */; };
 		AA57E36C1BD7E476004B0533 /* MicrosoftLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */; };
 		AA57E36D1BD7E476004B0533 /* MotoLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA57E3691BD7E476004B0533 /* MotoLogo.jpg */; };
@@ -34,8 +39,6 @@
 		AA711F621BD9723300D4A996 /* mylogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA711F611BD9723300D4A996 /* mylogo.jpg */; };
 		AA711F661BD991E800D4A996 /* addCompanyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA711F641BD991E800D4A996 /* addCompanyVC.m */; };
 		AA711F671BD991E800D4A996 /* addCompanyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA711F651BD991E800D4A996 /* addCompanyVC.xib */; };
-		AA711F6C1BD9921400D4A996 /* addProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA711F6A1BD9921400D4A996 /* addProductVC.m */; };
-		AA711F6D1BD9921400D4A996 /* addProductVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA711F6B1BD9921400D4A996 /* addProductVC.xib */; };
 		AA88A1991BD83D60001F0096 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A1981BD83D60001F0096 /* Company.m */; };
 		AA88A19E1BD83D9E001F0096 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A19D1BD83D9E001F0096 /* Product.m */; };
 		AA88A1A11BD85585001F0096 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A1A01BD85585001F0096 /* DAO.m */; };
@@ -78,8 +81,14 @@
 		48A656E818163F8700746D36 /* ProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductViewController.h; path = ../ProductViewController.h; sourceTree = "<group>"; };
 		48A656E918163F8700746D36 /* ProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductViewController.m; path = ../ProductViewController.m; sourceTree = "<group>"; };
 		48A656ED1816468000746D36 /* Sunflower.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Sunflower.gif; sourceTree = "<group>"; };
+		AA12FA881BE8016A00710414 /* dataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dataModel.xcdatamodel; sourceTree = "<group>"; };
+		AA12FA8A1BE8078800710414 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		AA4C2E881BDE6A4E00BC9BE3 /* utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilities.h; sourceTree = "<group>"; };
 		AA4C2E891BDE6A4E00BC9BE3 /* utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utilities.m; sourceTree = "<group>"; };
+		AA4F4EEB1BE91AD500B38835 /* CompanyManaged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyManaged.h; sourceTree = "<group>"; };
+		AA4F4EEC1BE91AD500B38835 /* CompanyManaged.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyManaged.m; sourceTree = "<group>"; };
+		AA4F4EEE1BE91AE100B38835 /* ProductManaged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductManaged.h; sourceTree = "<group>"; };
+		AA4F4EEF1BE91AE100B38835 /* ProductManaged.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductManaged.m; sourceTree = "<group>"; };
 		AA57E3671BD7E476004B0533 /* AppleLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = AppleLogo.jpg; sourceTree = "<group>"; };
 		AA57E3681BD7E476004B0533 /* MicrosoftLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MicrosoftLogo.jpg; sourceTree = "<group>"; };
 		AA57E3691BD7E476004B0533 /* MotoLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MotoLogo.jpg; sourceTree = "<group>"; };
@@ -91,9 +100,6 @@
 		AA711F631BD991E800D4A996 /* addCompanyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCompanyVC.h; sourceTree = "<group>"; };
 		AA711F641BD991E800D4A996 /* addCompanyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCompanyVC.m; sourceTree = "<group>"; };
 		AA711F651BD991E800D4A996 /* addCompanyVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addCompanyVC.xib; sourceTree = "<group>"; };
-		AA711F691BD9921400D4A996 /* addProductVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addProductVC.h; sourceTree = "<group>"; };
-		AA711F6A1BD9921400D4A996 /* addProductVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addProductVC.m; sourceTree = "<group>"; };
-		AA711F6B1BD9921400D4A996 /* addProductVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addProductVC.xib; sourceTree = "<group>"; };
 		AA88A1971BD83D60001F0096 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		AA88A1981BD83D60001F0096 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		AA88A19C1BD83D9E001F0096 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
@@ -113,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA12FA8B1BE8078800710414 /* CoreData.framework in Frameworks */,
 				AA6697761BE17571006F0BA3 /* libsqlite3.0.dylib in Frameworks */,
 				48A656B718163BF200746D36 /* CoreGraphics.framework in Frameworks */,
 				48A656B918163BF200746D36 /* UIKit.framework in Frameworks */,
@@ -164,6 +171,7 @@
 		48A656A818163BF200746D36 = {
 			isa = PBXGroup;
 			children = (
+				AA4F4EF11BE91AEA00B38835 /* NSManagedObject Class */,
 				48A656BA18163BF200746D36 /* NavCtrl */,
 				48A656D318163BF200746D36 /* NavCtrlTests */,
 				48A656B318163BF200746D36 /* Frameworks */,
@@ -183,6 +191,7 @@
 		48A656B318163BF200746D36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA12FA8A1BE8078800710414 /* CoreData.framework */,
 				AA6697751BE17571006F0BA3 /* libsqlite3.0.dylib */,
 				48A656B418163BF200746D36 /* Foundation.framework */,
 				48A656B618163BF200746D36 /* CoreGraphics.framework */,
@@ -195,6 +204,7 @@
 		48A656BA18163BF200746D36 /* NavCtrl */ = {
 			isa = PBXGroup;
 			children = (
+				AA12FA871BE8016A00710414 /* dataModel.xcdatamodeld */,
 				AAC89C6A1BDD7E9A00B97209 /* CompanyCell */,
 				AA88A19A1BD83D70001F0096 /* Company Class */,
 				AA88A19B1BD83D82001F0096 /* Product Class */,
@@ -202,13 +212,11 @@
 				483796CC1BCBF7C70062D5AB /* ParentViewController */,
 				483796CD1BCBF7EB0062D5AB /* ProductViewController */,
 				AAB665581BD53B4F004D100F /* WebViewController */,
-				AAB665551BD53B38004D100F /* WebViewController.xib */,
 				483796CB1BCBF7A00062D5AB /* AppDelegate */,
 				48A656C618163BF200746D36 /* Images.xcassets */,
 				48A656BB18163BF200746D36 /* Supporting Files */,
 				AA88A1A21BD855BC001F0096 /* DAO */,
 				AA711F681BD991F000D4A996 /* addCompanyVC */,
-				AA711F6E1BD9922600D4A996 /* addProductVC */,
 			);
 			path = NavCtrl;
 			sourceTree = "<group>";
@@ -259,6 +267,17 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		AA4F4EF11BE91AEA00B38835 /* NSManagedObject Class */ = {
+			isa = PBXGroup;
+			children = (
+				AA4F4EEB1BE91AD500B38835 /* CompanyManaged.h */,
+				AA4F4EEC1BE91AD500B38835 /* CompanyManaged.m */,
+				AA4F4EEE1BE91AE100B38835 /* ProductManaged.h */,
+				AA4F4EEF1BE91AE100B38835 /* ProductManaged.m */,
+			);
+			name = "NSManagedObject Class";
+			sourceTree = "<group>";
+		};
 		AA711F681BD991F000D4A996 /* addCompanyVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,16 +286,6 @@
 				AA711F651BD991E800D4A996 /* addCompanyVC.xib */,
 			);
 			name = addCompanyVC;
-			sourceTree = "<group>";
-		};
-		AA711F6E1BD9922600D4A996 /* addProductVC */ = {
-			isa = PBXGroup;
-			children = (
-				AA711F691BD9921400D4A996 /* addProductVC.h */,
-				AA711F6A1BD9921400D4A996 /* addProductVC.m */,
-				AA711F6B1BD9921400D4A996 /* addProductVC.xib */,
-			);
-			name = addProductVC;
 			sourceTree = "<group>";
 		};
 		AA88A19A1BD83D70001F0096 /* Company Class */ = {
@@ -311,6 +320,7 @@
 			children = (
 				AAB665531BD53B38004D100F /* WebViewController.h */,
 				AAB665541BD53B38004D100F /* WebViewController.m */,
+				AAB665551BD53B38004D100F /* WebViewController.xib */,
 			);
 			name = WebViewController;
 			sourceTree = "<group>";
@@ -401,6 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA4F4EF21BE9304D00B38835 /* dataModel.xcdatamodeld in Resources */,
 				AA6697741BE16EF6006F0BA3 /* CompanyDataBase.sqlite in Resources */,
 				48A656EE1816468000746D36 /* Sunflower.gif in Resources */,
 				AA711F601BD970D400D4A996 /* yourLogo.jpg in Resources */,
@@ -412,7 +423,6 @@
 				AA711F621BD9723300D4A996 /* mylogo.jpg in Resources */,
 				AAC89C691BDD7E9600B97209 /* CompanyCellView.xib in Resources */,
 				48A656BF18163BF200746D36 /* InfoPlist.strings in Resources */,
-				AA711F6D1BD9921400D4A996 /* addProductVC.xib in Resources */,
 				AAB665571BD53B38004D100F /* WebViewController.xib in Resources */,
 				AA711F671BD991E800D4A996 /* addCompanyVC.xib in Resources */,
 				48A656C718163BF200746D36 /* Images.xcassets in Resources */,
@@ -434,18 +444,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA711F6C1BD9921400D4A996 /* addProductVC.m in Sources */,
 				AA88A19E1BD83D9E001F0096 /* Product.m in Sources */,
 				48A656E618163C1B00746D36 /* CompanyViewController.m in Sources */,
 				AA88A1991BD83D60001F0096 /* Company.m in Sources */,
 				AAB665561BD53B38004D100F /* WebViewController.m in Sources */,
 				AA88A1A11BD85585001F0096 /* DAO.m in Sources */,
+				AA4F4EF01BE91AE100B38835 /* ProductManaged.m in Sources */,
 				AA4C2E8A1BDE6A4E00BC9BE3 /* utilities.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
 				AAC89C681BDD7E9600B97209 /* CompanyCellView.m in Sources */,
 				AA711F661BD991E800D4A996 /* addCompanyVC.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
 				48A656EB18163F8700746D36 /* ProductViewController.m in Sources */,
+				AA12FA891BE8016A00710414 /* dataModel.xcdatamodeld in Sources */,
+				AA4F4EED1BE91AD500B38835 /* CompanyManaged.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,6 +675,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AA12FA871BE8016A00710414 /* dataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AA12FA881BE8016A00710414 /* dataModel.xcdatamodel */,
+			);
+			currentVersion = AA12FA881BE8016A00710414 /* dataModel.xcdatamodel */;
+			path = dataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 48A656A918163BF200746D36 /* Project object */;
 }

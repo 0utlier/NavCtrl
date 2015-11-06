@@ -35,7 +35,9 @@
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	self.navigationItem.rightBarButtonItems = @[self.editButtonItem, addButton];
 	
-	
+	if (self.webViewController) {
+		[self.webViewController release];
+	}
 	
 	
 	[self.tableView reloadData];
@@ -225,11 +227,6 @@
 	[self.company.products removeObjectAtIndex:fromRow];
 	[self.company.products insertObject:rep atIndex:toRow];
 
-//	NSMutableArray *productIDArray = [[NSMutableArray alloc]init];
-//	for (Product *product in self.company.products) {
-//		[productIDArray addObject:product.company_ID];
-//	}
-//	
 	NSMutableArray *productIDArray = [[NSMutableArray alloc]init];
 	for (Product *product in self.company.products) {
 		[productIDArray addObject:product.product_ID];
@@ -240,18 +237,24 @@
 	//	[self.productLogo removeObjectAtIndex:fromRow];
 	//	[self.productLogo insertObject:repL atIndex:toRow];
 	[tableView reloadData];
-	[[DAO sharedDAO]editProductRows:productIDArray];
+	Company* company = self.company;
+	[[DAO sharedDAO]editProductRows:productIDArray company:company];
 }
 
 //delete rows
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	Product *original = self.company.products[indexPath.row];
+	Company *company = self.company;
 	NSUInteger row = [indexPath row];
-	[[DAO sharedDAO] deleteProduct:original];
+//	NSLog(@"%@", company.name);
+
 	[self.company.products removeObjectAtIndex:row];
 	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	[[DAO sharedDAO] deleteProduct:original company:company];
 	[tableView reloadData];
+	
+	[original release];
 }
 
 
@@ -293,13 +296,16 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 {
 	// Navigation logic may go here, for example:
 	// Create the next view controller.
-	WebViewController *detailViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-	detailViewController.url =@"https://www.google.com/";
+	_webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+	self.webViewController.url =@"https://www.google.com/";
 	
 	// Pass the selected object to the new view controller.
 	
 	// Push the view controller.
-	[self.navigationController pushViewController:detailViewController animated:YES];
+	[self.navigationController pushViewController:self.webViewController animated:YES];
+	
+	[_webViewController release];
+	
 }
 
 // use text from input to create new company
@@ -323,31 +329,37 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	
 	//alertView.title
-	
+	Company *company = self.company;
+
 	// only do the following if user hits ADD
 	if (buttonIndex == 1) {
 		if([alertView.title isEqualToString:@"Add Product"]){
 			
 			if (!self.company.products) {
-				self.company.products = [[NSMutableArray alloc]init];
+//				NSMutableArray *products = [[NSMutableArray alloc]init];
+//				self.company.products = products;
+//				[products release];
+				self.company.products = [[[NSMutableArray alloc]init] autorelease];
 			}
 			NSString *tempTextField0 = self.textField1.text;
 			NSString *tempTextField1 = self.textField2.text;
 			NSString *tempTextField2 = self.textField3.text;
+			/*
 			Product *tempProduct = [[Product alloc]init];
 			tempProduct.name = tempTextField0;
 			tempProduct.url = tempTextField1;
 			tempProduct.logo = tempTextField2;
 			//			NSLog(@"logo tempProduct = %@",tempProduct.logo);
-			[self.company.products addObject:tempProduct];
-			[self.tableView reloadData];
+//			[self.company.products addObject:tempProduct];
 //			NSLog(@"%@",[self.company.products]);
-
-			NSString *newIDNumber = [NSString stringWithFormat:@"%lu",(unsigned long)[self.company.products count]];
+*/
+			NSString *newIDNumber = [NSString stringWithFormat:@"%lu",(unsigned long)[self.company.products count]+1];
 			NSLog(@"%@", newIDNumber);
 
-			NSString *company_id = self.company.companyID;
+			NSString *company_id = company.companyID;
 			[[DAO sharedDAO] addProduct:tempTextField0 url:tempTextField1 logo:tempTextField2 company_id:company_id product_id:newIDNumber];
+			[self.tableView reloadData];
+
 		}
 		else {
 			
@@ -368,7 +380,8 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 			NSLog(@"%ld", (long)buttonIndex);
 			//		[self.dao.companyList addObject:tempCompany];
 			[self.tableView reloadData];
-			[[DAO sharedDAO] editProduct:tempTextField0 url:tempTextField1 logo:tempTextField2 original:original];
+			[[DAO sharedDAO] editProduct:tempTextField0 url:tempTextField1 logo:tempTextField2 original:original company:company];
+			[tempTextField0 release];
 		}
 	}
 }
