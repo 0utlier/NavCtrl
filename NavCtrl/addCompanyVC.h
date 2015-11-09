@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CompanyViewController.h"
+#import "CompanyCollectionViewController.h"
 
 @interface addCompanyVC : UIViewController
 @property (retain, nonatomic) IBOutlet UITextField *newCompanyText;

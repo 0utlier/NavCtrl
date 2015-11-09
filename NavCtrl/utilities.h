@@ -14,6 +14,7 @@
 	NSMutableData *_responseData;
 }
 @property (nonatomic, retain) DAO *dao;
-- (void)importStockPrice:(UITableView*)tableView;
+//- (void)importStockPrice:(UITableView*)tableView;
+- (void)importStockPrice:(UICollectionView*)tableView;
 
 @end

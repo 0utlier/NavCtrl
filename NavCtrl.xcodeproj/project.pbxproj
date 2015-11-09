@@ -25,6 +25,8 @@
 		48A656EE1816468000746D36 /* Sunflower.gif in Resources */ = {isa = PBXBuildFile; fileRef = 48A656ED1816468000746D36 /* Sunflower.gif */; };
 		AA12FA891BE8016A00710414 /* dataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA12FA871BE8016A00710414 /* dataModel.xcdatamodeld */; };
 		AA12FA8B1BE8078800710414 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA12FA8A1BE8078800710414 /* CoreData.framework */; };
+		AA1DFF251BEE78A1002B49C5 /* CompanyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1DFF231BEE78A1002B49C5 /* CompanyCollectionViewController.m */; };
+		AA1DFF261BEE78A1002B49C5 /* CompanyCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA1DFF241BEE78A1002B49C5 /* CompanyCollectionViewController.xib */; };
 		AA4C2E8A1BDE6A4E00BC9BE3 /* utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4C2E891BDE6A4E00BC9BE3 /* utilities.m */; };
 		AA4F4EED1BE91AD500B38835 /* CompanyManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4F4EEC1BE91AD500B38835 /* CompanyManaged.m */; };
 		AA4F4EF01BE91AE100B38835 /* ProductManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4F4EEF1BE91AE100B38835 /* ProductManaged.m */; };
@@ -39,6 +41,10 @@
 		AA711F621BD9723300D4A996 /* mylogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA711F611BD9723300D4A996 /* mylogo.jpg */; };
 		AA711F661BD991E800D4A996 /* addCompanyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA711F641BD991E800D4A996 /* addCompanyVC.m */; };
 		AA711F671BD991E800D4A996 /* addCompanyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA711F651BD991E800D4A996 /* addCompanyVC.xib */; };
+		AA76CE691BF102BD003DD6A3 /* ProductCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA76CE671BF102BD003DD6A3 /* ProductCollectionViewController.m */; };
+		AA76CE6A1BF102BD003DD6A3 /* ProductCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76CE681BF102BD003DD6A3 /* ProductCollectionViewController.xib */; };
+		AA76CE6F1BF10C44003DD6A3 /* ProductCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA76CE6D1BF10C44003DD6A3 /* ProductCellView.m */; };
+		AA76CE701BF10C44003DD6A3 /* ProductCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA76CE6E1BF10C44003DD6A3 /* ProductCellView.xib */; };
 		AA88A1991BD83D60001F0096 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A1981BD83D60001F0096 /* Company.m */; };
 		AA88A19E1BD83D9E001F0096 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A19D1BD83D9E001F0096 /* Product.m */; };
 		AA88A1A11BD85585001F0096 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = AA88A1A01BD85585001F0096 /* DAO.m */; };
@@ -83,6 +89,9 @@
 		48A656ED1816468000746D36 /* Sunflower.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Sunflower.gif; sourceTree = "<group>"; };
 		AA12FA881BE8016A00710414 /* dataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dataModel.xcdatamodel; sourceTree = "<group>"; };
 		AA12FA8A1BE8078800710414 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AA1DFF221BEE78A1002B49C5 /* CompanyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyCollectionViewController.h; sourceTree = "<group>"; };
+		AA1DFF231BEE78A1002B49C5 /* CompanyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyCollectionViewController.m; sourceTree = "<group>"; };
+		AA1DFF241BEE78A1002B49C5 /* CompanyCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompanyCollectionViewController.xib; sourceTree = "<group>"; };
 		AA4C2E881BDE6A4E00BC9BE3 /* utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilities.h; sourceTree = "<group>"; };
 		AA4C2E891BDE6A4E00BC9BE3 /* utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utilities.m; sourceTree = "<group>"; };
 		AA4F4EEB1BE91AD500B38835 /* CompanyManaged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyManaged.h; sourceTree = "<group>"; };
@@ -100,6 +109,12 @@
 		AA711F631BD991E800D4A996 /* addCompanyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCompanyVC.h; sourceTree = "<group>"; };
 		AA711F641BD991E800D4A996 /* addCompanyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCompanyVC.m; sourceTree = "<group>"; };
 		AA711F651BD991E800D4A996 /* addCompanyVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addCompanyVC.xib; sourceTree = "<group>"; };
+		AA76CE661BF102BD003DD6A3 /* ProductCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCollectionViewController.h; sourceTree = "<group>"; };
+		AA76CE671BF102BD003DD6A3 /* ProductCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCollectionViewController.m; sourceTree = "<group>"; };
+		AA76CE681BF102BD003DD6A3 /* ProductCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCollectionViewController.xib; sourceTree = "<group>"; };
+		AA76CE6C1BF10C44003DD6A3 /* ProductCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCellView.h; sourceTree = "<group>"; };
+		AA76CE6D1BF10C44003DD6A3 /* ProductCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCellView.m; sourceTree = "<group>"; };
+		AA76CE6E1BF10C44003DD6A3 /* ProductCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductCellView.xib; sourceTree = "<group>"; };
 		AA88A1971BD83D60001F0096 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		AA88A1981BD83D60001F0096 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		AA88A19C1BD83D9E001F0096 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
@@ -205,7 +220,10 @@
 			isa = PBXGroup;
 			children = (
 				AA12FA871BE8016A00710414 /* dataModel.xcdatamodeld */,
+				AA76CE6B1BF102C2003DD6A3 /* ProductCollection */,
+				AA1DFF271BEE78A9002B49C5 /* CompanyCollection */,
 				AAC89C6A1BDD7E9A00B97209 /* CompanyCell */,
+				AA76CE711BF10CCE003DD6A3 /* ProductCell */,
 				AA88A19A1BD83D70001F0096 /* Company Class */,
 				AA88A19B1BD83D82001F0096 /* Product Class */,
 				AA4C2E8B1BDE6C2A00BC9BE3 /* Utilities */,
@@ -258,6 +276,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		AA1DFF271BEE78A9002B49C5 /* CompanyCollection */ = {
+			isa = PBXGroup;
+			children = (
+				AA1DFF221BEE78A1002B49C5 /* CompanyCollectionViewController.h */,
+				AA1DFF231BEE78A1002B49C5 /* CompanyCollectionViewController.m */,
+				AA1DFF241BEE78A1002B49C5 /* CompanyCollectionViewController.xib */,
+			);
+			name = CompanyCollection;
+			sourceTree = "<group>";
+		};
 		AA4C2E8B1BDE6C2A00BC9BE3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +314,26 @@
 				AA711F651BD991E800D4A996 /* addCompanyVC.xib */,
 			);
 			name = addCompanyVC;
+			sourceTree = "<group>";
+		};
+		AA76CE6B1BF102C2003DD6A3 /* ProductCollection */ = {
+			isa = PBXGroup;
+			children = (
+				AA76CE661BF102BD003DD6A3 /* ProductCollectionViewController.h */,
+				AA76CE671BF102BD003DD6A3 /* ProductCollectionViewController.m */,
+				AA76CE681BF102BD003DD6A3 /* ProductCollectionViewController.xib */,
+			);
+			name = ProductCollection;
+			sourceTree = "<group>";
+		};
+		AA76CE711BF10CCE003DD6A3 /* ProductCell */ = {
+			isa = PBXGroup;
+			children = (
+				AA76CE6C1BF10C44003DD6A3 /* ProductCellView.h */,
+				AA76CE6D1BF10C44003DD6A3 /* ProductCellView.m */,
+				AA76CE6E1BF10C44003DD6A3 /* ProductCellView.xib */,
+			);
+			name = ProductCell;
 			sourceTree = "<group>";
 		};
 		AA88A19A1BD83D70001F0096 /* Company Class */ = {
@@ -417,6 +465,9 @@
 				AA711F601BD970D400D4A996 /* yourLogo.jpg in Resources */,
 				AA57E36C1BD7E476004B0533 /* MicrosoftLogo.jpg in Resources */,
 				AA57E36B1BD7E476004B0533 /* AppleLogo.jpg in Resources */,
+				AA76CE6A1BF102BD003DD6A3 /* ProductCollectionViewController.xib in Resources */,
+				AA1DFF261BEE78A1002B49C5 /* CompanyCollectionViewController.xib in Resources */,
+				AA76CE701BF10C44003DD6A3 /* ProductCellView.xib in Resources */,
 				AA57E36D1BD7E476004B0533 /* MotoLogo.jpg in Resources */,
 				AA57E36E1BD7E476004B0533 /* SamsungLogo.jpg in Resources */,
 				48A656E718163C1B00746D36 /* CompanyViewController.xib in Resources */,
@@ -452,8 +503,11 @@
 				AA4F4EF01BE91AE100B38835 /* ProductManaged.m in Sources */,
 				AA4C2E8A1BDE6A4E00BC9BE3 /* utilities.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
+				AA76CE691BF102BD003DD6A3 /* ProductCollectionViewController.m in Sources */,
 				AAC89C681BDD7E9600B97209 /* CompanyCellView.m in Sources */,
 				AA711F661BD991E800D4A996 /* addCompanyVC.m in Sources */,
+				AA1DFF251BEE78A1002B49C5 /* CompanyCollectionViewController.m in Sources */,
+				AA76CE6F1BF10C44003DD6A3 /* ProductCellView.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
 				48A656EB18163F8700746D36 /* ProductViewController.m in Sources */,
 				AA12FA891BE8016A00710414 /* dataModel.xcdatamodeld in Sources */,
@@ -532,7 +586,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -565,7 +619,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -581,6 +635,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NavCtrl/NavCtrl-Prefix.pch";
 				INFOPLIST_FILE = "NavCtrl/NavCtrl-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "qcd.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -596,6 +651,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NavCtrl/NavCtrl-Prefix.pch";
 				INFOPLIST_FILE = "NavCtrl/NavCtrl-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "qcd.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

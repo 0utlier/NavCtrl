@@ -11,13 +11,13 @@
 #import "Company.h"
 #import "Product.h"
 #import "DAO.h"
-#include "addCompanyVC.h"
+//#include "addCompanyVC.h"
 #import "CompanyCellView.h"
 #import "utilities.h"
 
 @class ProductViewController;
 
-@interface CompanyViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface CompanyViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) DAO *dao;
 @property (nonatomic, strong) utilities *utilities;

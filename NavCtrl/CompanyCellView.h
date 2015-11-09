@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CompanyCellView : UITableViewCell
+@interface CompanyCellView : UICollectionViewCell
 @property (retain, nonatomic) IBOutlet UIImageView *CompanyLogo;
 @property (retain, nonatomic) IBOutlet UILabel *companyName;
 @property (retain, nonatomic) IBOutlet UILabel *companyStock;

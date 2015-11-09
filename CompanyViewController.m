@@ -53,7 +53,14 @@
 	
 	self.utilities = [[utilities alloc]init];
 	[self.utilities importStockPrice:self.tableView];
-	[self.tableView reloadData];
+	
+	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+	
+	longPr.minimumPressDuration = 1.0; //seconds
+	[self.tableView addGestureRecognizer:longPr];
+	
+	// cr: this gets called automatically after view is loaded
+	//[self.tableView reloadData];
 
 }
 
@@ -134,18 +141,19 @@
 
 
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
 	// Return the number of sections.
 	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+//#warning Incomplete method implementation.
 	// Return the number of rows in the section.
 	return [self.dao.companyList count];
 }
@@ -158,9 +166,20 @@
 	NSString *logoString = [[self.dao.companyList objectAtIndex:indexPath.row] logo];
 //		NSLog(@"%@",logoString);
 	tableViewCell.CompanyLogo.image = [UIImage imageNamed:logoString];
-		UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-		longPr.minimumPressDuration = 1.0; //seconds
-		[tableViewCell addGestureRecognizer:longPr];
+	
+	//cr : if you want to add anything to cell, just check if already exists in cell, if not then add, you can also check if cell from deque is not nil
+	
+	//if([tableViewCell gestureRecognizers].count)
+	
+	//if([tableViewCell viewWithTag:1000])
+	
+	// cr: you don't need to add logpress gesture to cell, you can just add it to tableview - so you don't need to put it here
+//	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+//	
+//	
+//	
+//		longPr.minimumPressDuration = 1.0; //seconds
+//		[tableViewCell addGestureRecognizer:longPr];
 
 	return tableViewCell;
 }
@@ -206,7 +225,8 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 	Company *original = self.dao.companyList[indexPath.row];
 	[self.dao deleteCompany:original];
 	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-	[tableView reloadData];
+	// cr: the method below is not required as the above line deletes the row in table and you can see the change
+	//[tableView reloadData];
 }
 
 
@@ -221,7 +241,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 	 pushViewController:self.productViewController
 	 animated:YES];
 	
-	[self.tableView reloadData];
+//	[self.tableView reloadData]; 
 	
 	
 }
@@ -238,14 +258,17 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 		NSString *tempTextField1 = self.textField2.text;
 		NSString *tempTextField2 = self.textField3.text;
 		
+		// cr: its better if you put the 3 lines below into dao method - the same way you are changing the managed object or pass the index and alter the array based on index
 		[self.dao.companyList[self.indexToChange.row] setName: tempTextField0];
 		[self.dao.companyList[self.indexToChange.row] setTicker: tempTextField1];
 		[self.dao.companyList[self.indexToChange.row] setLogo: tempTextField2];
 		//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
 		//		NSLog(@"%ld", (long)buttonIndex);
 		
-		CompanyManaged *comp = [self.dao.companyListManaged  objectAtIndex:self.indexToChange.row];
+//		CompanyManaged *comp = [self.dao.companyListManaged  objectAtIndex:self.indexToChange.row];
 		[self.dao editCompany:tempTextField0 logo:tempTextField2 ticker:tempTextField1 original:original];
+		
+		// there is also an option just to update the particular row in table
 		[self.tableView reloadData];
 	}
 }

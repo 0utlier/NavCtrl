@@ -11,8 +11,10 @@
 @implementation utilities
 
 
-- (void)importStockPrice:(UITableView*)tableView{
-	
+//- (void)importStockPrice:(UITableView*)tableView{
+- (void)importStockPrice:(UICollectionView*)tableView{
+
+
 	self.dao =[DAO sharedDAO];
 	NSURLSession *session = [NSURLSession sharedSession];
 	NSString *urlString = @"http://download.finance.yahoo.com/d/quotes.csv?s=";//AAPL&f=l1";
@@ -35,13 +37,16 @@
 	}
 	// append this to ticker string &f=sl1
 	urlString = [urlString stringByAppendingString:@"&f=l1"];
-	
+//	NSLog(@"%@", urlString);
 	NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+		
+		// cr: check for error
+		
 		// data to string
 		NSString* stockValues =[[NSString alloc]initWithData:data encoding:NSASCIIStringEncoding];
-		//		NSLog(@"%@", stockValues);
+//				NSLog(@"%@", stockValues);
 		NSMutableArray *stockPrices = [[NSMutableArray alloc]initWithArray:[stockValues componentsSeparatedByString:@"\n"]];
-		//		NSLog(@"%@", stockPrices);
+//				NSLog(@"%@", stockPrices);
 		
 		for (int i = 0; i < stockPrices.count - 1; i++) {
 			Company *company = [self.dao.companyList objectAtIndex:i];

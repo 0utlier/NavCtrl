@@ -14,6 +14,8 @@
 
 @implementation ProductViewController
 
+//uncomment to initialize with custom
+/*
 - (id)initWithStyle:(UITableViewStyle)style
 {
 	self = [super initWithStyle:style];
@@ -22,7 +24,7 @@
 	}
 	return self;
 }
-
+*/
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -35,13 +37,25 @@
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	self.navigationItem.rightBarButtonItems = @[self.editButtonItem, addButton];
 	
+	
+	// cr: this is unnecessary code here as in viewload self.webVC is always nil
 	if (self.webViewController) {
 		[self.webViewController release];
 	}
 	
+	// cr: this gets called automatically after view is loaded
+	//[self.tableView reloadData];
 	
-	[self.tableView reloadData];
+	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+	longPr.minimumPressDuration = 1.0; //seconds
+	[self.collectionView addGestureRecognizer:longPr];
+
+	UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+	[flowLayout setItemSize:CGSizeMake(200, 200)];
+	[flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
 	
+	//[self.collectionView setCollectionViewLayout:flowLayout];
+
 }
 
 - (void)insertNewObject
@@ -91,7 +105,7 @@
 	//NSLog(@"UIGestureRecognizerStateBegan.");
 	
 	// Update ToDoStatus
-	[self.tableView reloadData];
+	[self.collectionView reloadData];
 	//Do Whatever You want on Began of Gesture
 	
 }
@@ -99,7 +113,8 @@
 - (void)viewWillAppear:(BOOL)animated {
 	
 	[super viewWillAppear:animated];
-	[self.tableView reloadData];
+	// cr: this gets called automatically after view is loaded
+	//[self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,9 +125,9 @@
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
-	CGPoint p = [gestureRecognizer locationInView:self.tableView];
+	CGPoint p = [gestureRecognizer locationInView:self.collectionView];
 	
-	NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+	NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:p];
 	self.indexToChange = indexPath;
 	if (indexPath == nil)
 		NSLog(@"long press on table view but not on a row");
@@ -157,7 +172,7 @@
 			self.textField3 = textField3;
 			
 			
-			UIAlertView *av = [[UIAlertView alloc] initWithTitle: [NSString stringWithFormat:@"Edit %@",[[[self.tableView cellForRowAtIndexPath:self.indexToChange] textLabel]text]]
+			UIAlertView *av = [[UIAlertView alloc] initWithTitle: [NSString stringWithFormat:@"Edit %@",[[[self.collectionView cellForItemAtIndexPath:self.indexToChange] textLabel]text]]
 														 message:@"" delegate:self
 											   cancelButtonTitle:@"Cancel"
 											   otherButtonTitles:@"Change", nil];
@@ -171,7 +186,7 @@
 			NSLog(@"long press on table view at row %lu",(unsigned long) indexPath.row);
 			
 			// Update ToDoStatus
-			[self.tableView reloadData];
+			[self.collectionView reloadData];
 			//Do Whatever You want on Began of Gesture
 		}
 	}
@@ -181,14 +196,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
 	// Return the number of sections.
 	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+//#warning Incomplete method implementation.
 	// Return the number of rows in the section.
 	return [self.company.products count];
 }
@@ -203,9 +218,9 @@
 	// Configure the cell...
 	cell.textLabel.text = [[self.company.products objectAtIndex:[indexPath row]]name];
 	//	[[cell imageView] setImage:[UIImage imageNamed:self.company.products]logo];
-	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
-	longPr.minimumPressDuration = 1.0; //seconds
-	[cell addGestureRecognizer:longPr];
+//	UILongPressGestureRecognizer *longPr = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(handleLongPress:)];
+//	longPr.minimumPressDuration = 1.0; //seconds
+//	[cell addGestureRecognizer:longPr];
 	
 	
 	return cell;
@@ -250,9 +265,12 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 //	NSLog(@"%@", company.name);
 
 	[self.company.products removeObjectAtIndex:row];
-	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	// cr: execute the above line inside DAO, then delete from tableview
 	[[DAO sharedDAO] deleteProduct:original company:company];
-	[tableView reloadData];
+
+	
+	[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	//[tableView reloadData];
 	
 	[original release];
 }
@@ -358,7 +376,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 
 			NSString *company_id = company.companyID;
 			[[DAO sharedDAO] addProduct:tempTextField0 url:tempTextField1 logo:tempTextField2 company_id:company_id product_id:newIDNumber];
-			[self.tableView reloadData];
+			[self.collectionView reloadData];
 
 		}
 		else {
@@ -379,7 +397,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(
 			//		NSLog(@"logo tempCompany = %@",tempCompany.logo);
 			NSLog(@"%ld", (long)buttonIndex);
 			//		[self.dao.companyList addObject:tempCompany];
-			[self.tableView reloadData];
+			[self.collectionView reloadData];
 			[[DAO sharedDAO] editProduct:tempTextField0 url:tempTextField1 logo:tempTextField2 original:original company:company];
 			[tempTextField0 release];
 		}

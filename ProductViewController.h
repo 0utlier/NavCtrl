@@ -10,8 +10,9 @@
 #import "CompanyViewController.h"
 //import webView to point to
 #import "WebViewController.h"
+#import "CompanyCollectionViewController.h"
 
-@interface ProductViewController : UITableViewController
+@interface ProductViewController : UICollectionViewController <UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 //@property (nonatomic, retain) NSMutableArray *products;
 //@property (nonatomic, retain) NSString *productLogo;
 //@property (nonatomic, retain) NSURL *url;
