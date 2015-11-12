@@ -11,21 +11,22 @@
 @implementation Company
 
 
-/*
  -(void)dealloc{
 	[_name release];
 	[_logo release];
 	[_ticker release];
 	[_tickerPrice release];
 	[_companyID release];
+	 [_products release];
+	 
 	_name = nil;
 	_logo = nil;
 	_ticker = nil;
 	_tickerPrice = nil;
 	_companyID = nil;
+	 _products = nil;
 	
 	[super dealloc];
 }
-*/
 
 @end

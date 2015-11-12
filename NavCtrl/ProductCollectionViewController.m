@@ -43,6 +43,7 @@
 	[self.collectionView addGestureRecognizer:longPr];
 
 	[self.collectionView setCollectionViewLayout:flowLayout];
+//	[flowLayout release];
 }
 
 - (void)didReceiveMemoryWarning {

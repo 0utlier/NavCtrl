@@ -15,6 +15,6 @@
 }
 @property (nonatomic, retain) DAO *dao;
 //- (void)importStockPrice:(UITableView*)tableView;
-- (void)importStockPrice:(UICollectionView*)tableView;
+- (void)importStockPrice:(UICollectionView*)collectionView;
 
 @end

@@ -17,10 +17,10 @@
 //static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-     self.clearsSelectionOnViewWillAppear = NO;
+	[super viewDidLoad];
+	
+	// Uncomment the following line to preserve selection between presentations
+	self.clearsSelectionOnViewWillAppear = NO;
 	
 	//instantiate UICollectionView
 	self.collectionView.delegate=self;
@@ -29,7 +29,7 @@
 	[flowLayout setItemSize:CGSizeMake(350, 50)];
 	[flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
 	
-    // Register cell classes
+	// Register cell classes
 	[self.collectionView registerNib:[UINib nibWithNibName:@"CompanyCellView" bundle:nil] forCellWithReuseIdentifier:@"CompanyCellView"];
 	
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -51,13 +51,22 @@
 	longPr.minimumPressDuration = 1.0; //seconds
 	[self.collectionView addGestureRecognizer:longPr];
 	
+//	[NSTimer scheduledTimerWithTimeInterval:60 invocation:[self.collectionView reloadData] repeats:YES];
+	
+
+	[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(reloadView) userInfo:nil repeats:YES];
 	
 	[self.collectionView setCollectionViewLayout:flowLayout];
 }
 
+- (void)reloadView {
+	[self.utilities importStockPrice:self.collectionView];
+	NSLog(@"Reloaded page");
+}
+
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 
@@ -65,33 +74,33 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 	if (self.editing) {
 		// Open an action sheet with the possible editing actions
-		Company *index = [self.dao.companyList objectAtIndex:indexPath.row];
-//		NSLog(@"You clicked on %@ and indexPath row is %ld", index.name, (long)[indexPath row]);
+	//	Company *index = [self.dao.companyList objectAtIndex:indexPath.row];
+		//		NSLog(@"You clicked on %@ and indexPath row is %ld", index.name, (long)[indexPath row]);
 		[self.collectionView performBatchUpdates:^{
 			NSArray<NSIndexPath * > *deletionArray = @[indexPath];
 			[self.collectionView deleteItemsAtIndexPaths:deletionArray];
 			Company *original = self.dao.companyList[indexPath.row];
 			[self.dao deleteCompany:original];
+			//[original release];
 			[self.collectionView reloadData];
 		} completion:nil];
-		
 	}
 	else{
-	self.productCollectionViewController = [[ProductCollectionViewController alloc]initWithNibName:@"ProductCollectionViewController" bundle:nil];
-	self.productCollectionViewController.company = [self.dao.companyList objectAtIndex:indexPath.row];
-	[self.navigationController
-	 pushViewController:self.productCollectionViewController
-	 animated:YES];
+		self.productCollectionViewController = [[ProductCollectionViewController alloc]initWithNibName:@"ProductCollectionViewController" bundle:nil];
+		self.productCollectionViewController.company = [self.dao.companyList objectAtIndex:indexPath.row];
+		[self.navigationController
+		 pushViewController:self.productCollectionViewController
+		 animated:YES];
 	}
 }
 
 /*
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 - (void)insertNewObject
 {
 	//display UIAlertView
@@ -148,7 +157,7 @@
 //{
 //	addCompanyVC *newCompany = [[addCompanyVC alloc]init];
 //	newCompany.modalTransitionStyle = UIModalPresentationFormSheet;
-//	
+//
 //	[self.navigationController pushViewController:newCompany animated:YES];
 //}
 
@@ -205,8 +214,8 @@
 			[av show];
 			[av release];
 			
-//						NSLog(@"long press on table view at row %ld", (long)indexPath.row);
-//			[self.collectionView reloadData];
+			//						NSLog(@"long press on table view at row %ld", (long)indexPath.row);
+			//			[self.collectionView reloadData];
 		}
 	}
 }
@@ -216,69 +225,69 @@
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+	return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.dao.companyList count];
+	return [self.dao.companyList count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	
 	CompanyCellView *cell = [[CompanyCellView alloc]init];
 	cell = (CompanyCellView*)[self.collectionView dequeueReusableCellWithReuseIdentifier:@"CompanyCellView" forIndexPath:indexPath];
-    
-    // Configure the cell
+	
+	// Configure the cell
 	cell.companyName.text = [[self.dao.companyList objectAtIndex:[indexPath row]]name];
 	cell.companyStock.text = [[self.dao.companyList objectAtIndex:[indexPath row]] ticker];
 	cell.compantyStockPrice.text = [[self.dao.companyList objectAtIndex:[indexPath row]]tickerPrice];
 	NSString *logoString = [[self.dao.companyList objectAtIndex:indexPath.row] logo];
-	//		NSLog(@"%@",logoString);
+//	NSLog(@"Stock prices for my company = %@",cell.compantyStockPrice.text);
 	cell.CompanyLogo.image = [UIImage imageNamed:logoString];
 	
-    return cell;
+	return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
 
 /*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+ // Uncomment this method to specify if the specified item should be highlighted during tracking
+ - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
 	return YES;
-}
-*/
+ }
+ */
 
 
 // Uncomment this method to specify if the specified item should be selected
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+	return YES;
 }
 
 //delete cell
 - (void)deleteItemsAtIndexPaths:(NSArray *)indexPaths{
-//how to delete cell in UICollectionView
+	//how to delete cell in UICollectionView
 }
 /*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+ // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+ - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
 	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+ }
+ 
+ - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
 	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+ }
+ 
+ - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
 	
-}
-*/
+ }
+ */
 
 // use text from input to create new company
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	
 	//alertView.title
-//	Company *company = self.company;
+	//	Company *company = self.company;
 	NSString *original = [self.dao.companyList[self.indexToChange.row] name];
 	
 	if ([alertView.title isEqualToString:@"Add Company"]) {
@@ -306,7 +315,7 @@
 	else {
 		
 		// Edit Company
-//		NSString *original = [self.company.products[self.indexToChange.row] name];
+		//		NSString *original = [self.company.products[self.indexToChange.row] name];
 		NSString *tempTextField0 = self.textField1.text;
 		NSString *tempTextField1 = self.textField2.text;
 		NSString *tempTextField2 = self.textField3.text;
@@ -323,6 +332,7 @@
 		//		[self.dao.companyList addObject:tempCompany];
 		[self.collectionView reloadData];
 		[self.dao editCompany:tempTextField0 logo:tempTextField2 ticker:tempTextField1 original:original];
+		[self.utilities importStockPrice:self.collectionView];
 		[tempTextField0 release];
 		
 	}

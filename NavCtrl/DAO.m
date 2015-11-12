@@ -196,9 +196,12 @@
 			product.company_ID = productManaged.company_ID;
 			product.product_ID = productManaged.product_ID;
 			[company.products addObject:product];
+			[product release];
+			
 		}
 		
 		[self.companyList addObject:company];
+		[company release];
 	}
 	
 	
@@ -311,7 +314,19 @@
 		}
 	}
 	[self saveContext];
+
+	[company.products removeAllObjects];
 	[self.companyList removeObject:company];
+	
+	//[company retain];
+	
+	//[company.products[0] release];
+//	[company.products[1] release];
+//	[company.products[2] release];
+
+	
+//	[company release];
+
 }
 
 
@@ -407,6 +422,7 @@
 	}
 	[self saveContext];
 	[company.products removeObject:product];
+	[product release];
 }
 
 - (void)editProductRows:(NSMutableArray *)productIDArray company:(Company *)company

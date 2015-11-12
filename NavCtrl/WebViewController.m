@@ -19,9 +19,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	//convert nsstring to nsurl
-	NSURL *myurl = [[NSURL alloc] initWithString:self.url];
+	NSURL *myurl = [[[NSURL alloc] initWithString:self.url] autorelease];
 	// load the url
-	NSURLRequest *req = [[NSURLRequest alloc] initWithURL:myurl];
+	NSURLRequest *req = [[[NSURLRequest alloc] initWithURL:myurl] autorelease];
 	[self.myWebView loadRequest:req];
 }
 
